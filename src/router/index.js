@@ -7,6 +7,7 @@ import Project from '@/view/project/index.vue'
 import Certification from '@/view/Certification/index.vue'
 import Blogs from '@/view/blogs/index.vue'
 
+import Blank from '@/view/blank/index.vue'
 
 Vue.use(Router)
 
@@ -42,7 +43,11 @@ export default new Router({
       name: 'Blogs',
       component: Blogs
     },
-
+    {
+      path:'/Blank',
+      name:'Blank',
+      component:Blank
+    }
   ],
 
 
