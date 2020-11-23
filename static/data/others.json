@@ -1,0 +1,24 @@
+{
+   "contents":[
+       {"title":"关于本项目",
+        "content":"本项目是基于vue的个人简历，服务器使用github-page进行搭建。页面布局仿照React-Spring官方网站（https://www.react-spring.io/）。项目中使用到的技术栈包括vue vue-router element-ui e-charts以及 jQuery。同时为了解析json文件进行了axios封装。这个项目是作者第一个完全独立建设的项目，还有诸多不足，未来会继续改进。",
+        "status":"最小化"
+        },
+        {"title":"关于作者",
+         "content":"作者技术栈包括。。。",
+         "status":"最小化"
+        },
+        {"title":"关于作者",
+            "content":"作者技术栈包括。。。",
+            "status":"最小化"
+        },
+        {"title":"关于作者",
+            "content":"作者技术栈包括。。。",
+            "status":"最小化"
+        },
+        {"title":"关于作者",
+            "content":"作者技术栈包括。。。",
+            "status":"最小化"
+        }
+    ]
+}

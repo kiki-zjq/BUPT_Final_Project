@@ -1,0 +1,52 @@
+{
+    "contents":[
+          {
+            "content": ["I joined bytedance in the summer vacation of 2019 for the front-end development internship. During the internship, I was responsible for the page production of the background administrator management system. Completed the migration of the old system from the old framework to the new framework. Complete the requirements of product colleagues (including crawler to capture pictures, details optimization, etc.). Through the internship, I have mastered the relevant knowledge of front-end development, familiar with the information interaction of front and rear terminals, and optimized the code habits. Improved engineering experience.",
+              "",
+              "Part of project experience:",
+              "Project 1 Automobile management system",
+              "Project 2 Migration of old framework in management system",
+              "Project 3 Booking interface of mobile",
+              "",
+              "Finally, during the 19-year internship, I have made great progress in my coding ability and become more and more accustomed to a long working life. Special thanks to bytedance for giving me a chance to work as a beginner last year QAQ!"],
+            "title":"Front-end Intership,Bytedance Company",
+            "timestamp": "2019-07  to  2019-10",
+            "type":"warning",
+            "size":"large"
+          }, 
+          {
+            "content":[ "Nowadays, with the hot trend of artificial intelligence, more and more researchers focus on the research of algorithm.",
+              "The project aims to capture algorithmically related papers from paper websites, and then statistically and categorically present them visually. In this way, we can see the trends of different algorithms in different conferences in recent years. For use by relevant researchers and learners.",
+              "The skill used in this project include: Vue, E-charts, Element-UI, Python, Vue-Router, Axios,etc。",
+              "",
+              "Part of tasks:",
+              "Task 1 Use Python to grab the information from website.",
+              "Task 2 Production of Front-end interface and data visualization",
+              "Task 3 Store the data into MongoDB database. Set up index by Elastic Search"],
+            "title":"College students' innovation and entrepreneurship competition",
+            "timestamp": "2019-06  to  Now",
+            "type":"success",
+            "size":"large"
+          }, 
+          {
+            "content":["This is a programming projects using the Arduino language based on C. I built a guide car which assembled with several different sensors like bluetooth sensor, ultrasonic sensor, etc.",
+              "",
+              "Part of tasks:",
+              "Task 1 Complete the car running logic and other code production by arduino language",
+              "Task 2 Designed an android app used to remotely control the car via bluetooth."],
+            "title":"Arduino development with Mega Board ",
+            "timestamp": "2019-06 至 2019-09",
+            "type":"primary",
+            "size":"large"
+          },
+          {
+            "content": ["Communicated and studied with students majoring in computer science.",
+                "Get used to the communication and study in English environment."],
+            "title":"Exchange program to Queen Mary University of London ",
+            "timestamp": "2019-01 to 2019-02",
+            "type":"primary",
+            "size":"large"
+          }
+          
+    ]
+}

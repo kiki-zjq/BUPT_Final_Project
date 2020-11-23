@@ -1,0 +1,214 @@
+[
+    {
+        "name":"前端技能",
+        "value":"2000",
+        "children":[
+            {
+                "name":"HTML + CSS + JS",
+                "value":"400",
+                "children":[
+                    {
+                        "name":"HTML",
+                        "value":"150",
+                        "children":[
+                            {
+                                "name":"HTML",
+                                "value":"150"
+                            },
+                            {
+                                "name":"HTML5",
+                                "value":"120"
+                            }
+                        ]
+                    },
+                    {
+                        "name":"CSS",
+                        "value":"100",
+                        "children":[
+                            {
+                                "name":"CSS",
+                                "value":"120"
+                            },
+                            {
+                                "name":"CSS3",
+                                "value":"120"
+                            }
+                        ]
+                    },
+                    {
+                        "name":"JS",
+                        "value":"225",
+                        "children":[
+                            {
+                                "name":"JavaScript",
+                                "value":"150"
+                            },
+                            {
+                                "name":"ES6",
+                                "value":"120"
+                            },
+                            {
+                                "name":"TypeScript",
+                                "value":"90"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name":"HTML5 + CSS3 + ES6",
+                "value":"400",
+                "children":[
+                    {
+                        "name":"HTML5",
+                        "value":"100"
+                    },
+                    {
+                        "name":"CSS3",
+                        "value":"150"
+                    },
+                    {
+                        "name":"ES6",
+                        "value":"225"
+                    }
+                ]
+            },
+            {
+                "name":"jQuery",
+                "value":"200"
+            },
+            {
+                "name":"Vue",
+                "value":"700",
+                "children":[
+                    {
+                        "name":"Vue",
+                        "value":"300"
+                    },
+                    {
+                        "name":"Vuex",
+                        "value":"200"
+                    },
+                    {
+                        "name":"Vue-router",
+                        "value":"200"
+                    },
+                    {
+                        "name":"Element-UI",
+                        "value":"100"
+                    }
+                ]
+                
+            },
+            {
+                "name":"React + Redux",
+                "value":"400"
+            }
+
+        ]
+
+    },
+    
+
+
+
+    {
+        "name":"后端技能",
+        "value":"1000",
+        "children":[
+            {
+                "name":"Java",
+                "value":"500"
+            },
+            {
+                "name":"Python",
+                "value":"600",
+                "children":[
+                    {
+                        "name":"NumPy",
+                        "value":"100"
+                    },
+                    {
+                        "name":"python爬虫",
+                        "value":"300"
+                    },
+                    {
+                        "name":"Pandas",
+                        "value":"100"
+                    }
+
+                ]
+            },
+            {
+                "name":"Postman",
+                "value":"400"    
+            },
+            {
+                "name":"Node.js",
+                "value":"600",
+                "children":[
+                    {
+                        "name":"express",
+                        "value":"100"
+                    },
+                    {
+                        "name":"koa",
+                        "value":"75"
+                    },
+                    {
+                        "name":"next.js",
+                        "value":"75"
+                    }
+                ]
+            }
+        ]
+    },
+    
+
+
+
+    {
+        "name":"数据库",
+        "value":"1000",
+        "children":[
+            {
+                "name":"关系型数据库",
+                "value":"700",
+                "children":[
+                    {
+                        "name":"MySQL",
+                        "value":"700"
+                    }
+                ]
+            },
+            {
+                "name":"非关系型数据库",
+                "value":"400",
+                "children":[
+                    {
+                        "name":"MongoDB",
+                        "value":"400"
+                    }
+                ]
+            }
+        ]
+    },
+    
+
+
+    {
+        "name":"其他",
+        "value":"1000",
+        "children":[
+            {
+                "name":"开发相关Git",
+                "value":"700"
+            },
+            {
+                "name":"机器学习",
+                "value":"400"
+            }
+        ]
+    }
+
+]
