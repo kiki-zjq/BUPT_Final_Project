@@ -1,6 +1,8 @@
 <template>
     <div class="toolbox">
-
+        <el-button type="primary" icon="el-icon-edit" circle class="btn"></el-button>
+        <el-button type="primary" icon="el-icon-edit" circle class="btn"></el-button>
+        <el-button type="primary" icon="el-icon-edit" circle class="btn"></el-button>
     </div>
 </template>
 
@@ -14,9 +16,13 @@ export default {
 
 <style scoped>
 .toolbox{
-    height:60px;
-    background-color:#AAA;
-    border-bottom: #333 solid 1px;
+    margin-top:20px;
+    position: sticky;
+    top:100px;
+
 }
 
+.btn{
+
+}
 </style>
