@@ -1,8 +1,8 @@
 <template>
     <div class="toolbox">
+        <!-- <el-button type="primary" icon="el-icon-edit" circle class="btn"></el-button>
         <el-button type="primary" icon="el-icon-edit" circle class="btn"></el-button>
-        <el-button type="primary" icon="el-icon-edit" circle class="btn"></el-button>
-        <el-button type="primary" icon="el-icon-edit" circle class="btn"></el-button>
+        <el-button type="primary" icon="el-icon-edit" circle class="btn"></el-button> -->
     </div>
 </template>
 

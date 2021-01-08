@@ -16,15 +16,17 @@
             
             
             <el-col :span="4">
-                <el-button type="primary" icon="el-icon-edit" class="btn" @click="addQuestion=true"></el-button>
-
+                <div class="edit-box">
+                    <el-button type="primary" class="btn" @click="addQuestion=true">EDIT</el-button><br/>
+                    <el-button type="success" class="btn" @click="addQuestion=true">PREVIEW</el-button><br/>
+                    <el-button type="warning" class="btn" @click="addQuestion=true">DOWNLOAD</el-button><br/>
+                </div>
             </el-col>
                     
 
         </el-row>
 
 
-        <QuestionBlock :visible.sync="addQuestion"/>
 
     </div>    
 </template>
@@ -34,7 +36,7 @@
 import HeaderPart from './components/head'
 import ToolBox from './components/toolbox'
 import MainPart from './components/mainPart'
-import QuestionBlock from './components/questionBlock'
+
 export default {
     data(){
         return{
@@ -45,7 +47,7 @@ export default {
         HeaderPart,
         ToolBox,
         MainPart,
-        QuestionBlock
+
     }
 }
 </script>
@@ -64,10 +66,13 @@ export default {
     background-color: #dadce0;
 }
 .btn{
-    position: fixed;
-    bottom: 100px;
-    right:60px;
+    margin-top:20px;
     width:120px;
     height:60px;
+}
+.edit-box{
+    position: fixed;
+    bottom: 40px;
+    right:60px;
 }
 </style>

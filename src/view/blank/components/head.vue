@@ -1,7 +1,7 @@
 <template>
     <div class='head'>
         <div class="logo">
-            <i class="el-icon-document"></i>
+            
         </div>
 
 

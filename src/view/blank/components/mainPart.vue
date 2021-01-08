@@ -4,10 +4,10 @@
             <QuestionBlock
                 v-for="(question,index) in questions"
                 :key="index"
-                :question="question.question"
-                :grade="question.grade"
+                :title="question.title"
+                :total="question.total"
                 :subquestion="question.subquestion"
-                :index="index+1"
+                :ind="index+1"
              />
         </div>
     </div>    
@@ -15,7 +15,7 @@
 
 <script>
 
-import {fetchWordCloud, fetchQuestion} from '@/request/api'
+import {fetchQuestion} from '@/request/api'
 import QuestionBlock from './questionBlock'
 export default {
     data(){
@@ -28,6 +28,7 @@ export default {
         fetchQuestion().then((res)=>{
             console.log(res.data)
             this.questions = res.data
+            console.log(this.questions)
         })
     },
     components:{
