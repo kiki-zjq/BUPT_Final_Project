@@ -1,13 +1,16 @@
 <template>
     <div class="main-part">
+        
         <div class="doc">
+            <Cover style="margin-bottom:4em;"/>
             <QuestionBlock
                 v-for="(question,index) in questions"
                 :key="index"
-                :title="question.title"
-                :total="question.total"
-                :subquestion="question.subquestion"
+                :question="question"
                 :ind="index+1"
+
+                @modify="modify"
+                @del="del"
              />
         </div>
     </div>    
@@ -15,24 +18,32 @@
 
 <script>
 
-import {fetchQuestion} from '@/request/api'
+
 import QuestionBlock from './questionBlock'
+import Cover from './coverPage'
 export default {
+    props:{
+        questions:[],
+    },
     data(){
         return{
-            questions:[],
+            
         }
     },
+    methods:{
+        del(qid){
+            this.$emit("del",qid)
+        },
+        modify(data,qid){
+            this.$emit("modify",data,qid)
+        },
+    },
     mounted(){
-
-        fetchQuestion().then((res)=>{
-            console.log(res.data)
-            this.questions = res.data
-            console.log(this.questions)
-        })
+        
     },
     components:{
-        QuestionBlock
+        QuestionBlock,
+        Cover
     }
 }
 </script>

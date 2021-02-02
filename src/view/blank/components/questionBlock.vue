@@ -1,11 +1,11 @@
 <template>
     <div class="question-block">
-        <div class="question-title">{{ind}}.{{title}}</div>
-        <div class="question-grade">[{{total}} marks]</div>
+        <div class="question-title">{{ind}}.{{question.title}}</div>
+        <div class="question-grade">[{{question.total}} marks]</div>
         
         <div 
             class="question-sub" 
-            v-for="(sub,i) in subquestion"
+            v-for="(sub,i) in question.subquestion"
             :key="i">
             <p>({{i+1}}) {{sub.question}}</p>
             <p class="question-grade">({{sub.grade}} marks)</p>            
@@ -14,7 +14,7 @@
         <div class="tool-box">
             <el-button type="primary" size="small" icon="el-icon-edit" @click="edit()" circle></el-button>
             <el-button type="warning" size="small" icon="el-icon-chat-square" circle></el-button>
-            <el-button type="danger" size="small" icon="el-icon-delete" circle></el-button>
+            <el-button type="danger" size="small" icon="el-icon-delete" @click="del()" circle></el-button>
         </div>
 
 
@@ -22,12 +22,16 @@
         <el-dialog title="Edit Question" :visible.sync="dialogFormVisible">
             <el-form label-width="100px">
                 <el-form-item label="Question" >
-                    <el-input type="textarea" :placeholder=title :autosize="{ minRows: 2, maxRows: 6}" v-model="editTitle" resize="none" clearable></el-input>
+                    <el-input type="textarea" :placeholder=editTitle :autosize="{ minRows: 2, maxRows: 6}" v-model="editTitle" resize="none" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="Total Marks" >
                     <el-col :span="2">
-                     <el-input :placeholder=total v-model="editTotal" ></el-input>
+                     <el-input :placeholder=editTotal v-model="editTotal" 
+                                onkeyup="this.value=this.value.replace(/[^\d]/g,'') " 
+                                onafterpaste="this.value=this.value.replace(/[^\d]/g,'') ">
+                    </el-input>
                     </el-col>
+                    
                     <el-col :span="5">
                         <span style="font-weight:bold;margin-left:1.5em;"> Marks </span>
                     </el-col>
@@ -39,7 +43,10 @@
                     </el-form-item>
                     <el-form-item label="Marks" >
                         <el-col :span="2">
-                        <el-input :placeholder=sub.grade v-model="sub.grade" ></el-input>
+                        <el-input :placeholder=sub.grade v-model="sub.grade" 
+                                    onkeyup="this.value=this.value.replace(/[^\d]/g,'') " 
+                                    onafterpaste="this.value=this.value.replace(/[^\d]/g,'') "
+                        ></el-input>
                         </el-col>
                         <el-col :span="5">
                             <span style="font-weight:bold;margin-left:1.5em;"> Marks </span>
@@ -53,7 +60,7 @@
             <div slot="footer" class="dialog-footer">
                 <el-button type="success" @click="addSub()">Add Subquestion</el-button>
                 <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">Save</el-button>
+                <el-button type="primary" @click="modify()">Save</el-button>
             </div>
 
         </el-dialog>
@@ -65,9 +72,8 @@ import EditBlock from './editBlock'
 
 export default {
     props:{
-        title:'',
-        total:'',
-        subquestion:[],
+        question:{},
+
         ind:0,
     },
     data(){
@@ -81,11 +87,32 @@ export default {
     methods:{
         edit(){
             this.dialogFormVisible = true;
-            this.editTitle = this.title;
-            this.editTotal = this.total;
+            this.editTitle = this.question.title;
+            this.editTotal = this.question.total;
             // this.editSub = this.subquestion;
-            this.editSub = JSON.parse(JSON.stringify(this.subquestion))
+            this.editSub = JSON.parse(JSON.stringify(this.question.subquestion))
 
+        },
+        del(){
+
+            this.$confirm('Are you sure you want to delete this question?', '', {
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            type:'warning'
+            }).then(()=>{
+                this.$message({
+                type: 'success',
+                message: `Delete Successfully`
+                });
+                this.$emit('del',this.question.qid)
+            }).catch(()=>{
+                this.$message({
+                type: 'info',
+                message: `Cancel Delete Action`
+                });
+            }) 
+
+            
         },
         delSub(i){
             this.$confirm('Are you sure you want to delete this subquestion?', '', {
@@ -111,6 +138,38 @@ export default {
                 grade:0,
             }
             this.editSub.push(Obj)
+        },
+        modify(){
+
+            if(this.check()){
+                this.dialogFormVisible = false;
+                var data={
+                    "title":this.editTitle,
+                    "total":this.editTotal,
+                    "subquestion":this.editSub,
+                    "qid":this.question.qid
+                }
+                this.$emit('modify',data,this.question.qid)
+            }else{
+                this.$notify({
+                    title: 'Warning',
+                    message: 'Make sure that the sum of subquestion score is equal to the total score!',
+                    type: 'warning',
+                    duration:5000,
+                });
+            }
+            
+            
+        },
+        check(){
+            var sum = 0;
+            if(!this.editSub.length)return true;
+
+            this.editSub.forEach((sub)=>{
+                sum += Number(sub.grade)
+            })
+            if(this.editTotal == sum)return true;
+            else return false;
         }
     },
     components:{

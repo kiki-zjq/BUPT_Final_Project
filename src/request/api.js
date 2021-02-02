@@ -2,27 +2,32 @@ import axios from 'axios'
 
 const proxy='https://www.fastmock.site/mock/c44d08ff131933059ee720ac232910e4/test'
 
-export function fetchWordCloud() {
-    const url =proxy+'/paper/findMsgByWordCloud'
-    return axios.get(url)
+
+
+
+// 增加新的问题
+export function addQuestion(data){
+    const url = 'http://localhost:3000/questions'
+    return axios.post(url,data)
 }
 
-export function fetchBarChart() {
-    const url =proxy+'/paper/findFigure1ByWC'
-    return axios.get(url)
+// 修改已经存在的问题
+export function modifyQuestion(data,qid){
+    console.log("qid=",qid)
+    const url = 'http://localhost:3000/questions/'+qid
+    return axios.post(url,data)
 }
 
-export function fetchCloudChart() {
-    const url =proxy+'/paper/findFigure2ByWC'
-    return axios.get(url)
-}
 
-export function fetchPieChart() {
-    const url =proxy+'/paper/findFigure3ByWC'
-    return axios.get(url)
-}
-
+// 读取MongoDB(Final.question)中的问题数据
 export function fetchQuestion(){
-    const url ='https://www.fastmock.site/mock/f94cbaef21e3b2d49f3980edb7626137/final/getQuestion'
+    //const url ='https://www.fastmock.site/mock/f94cbaef21e3b2d49f3980edb7626137/final/getQuestion'
+    const url = 'http://localhost:3000/questions'
     return axios.get(url)
+}
+
+// 删除问题
+export function deleteQuestion(qid){
+    const url = 'http://localhost:3000/questions/'+qid
+    return axios.delete(url)
 }
