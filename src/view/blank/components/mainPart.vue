@@ -12,6 +12,9 @@
                 @modify="modify"
                 @del="del"
              />
+
+             <el-divider></el-divider>
+             <p style="text-align:center;font-family:Times New Roman">END OF PAPER</p>
         </div>
     </div>    
 </template>

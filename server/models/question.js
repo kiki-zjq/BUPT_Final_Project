@@ -17,7 +17,10 @@ const questionSchema = new Schema({
     qid:{
         type:Number,
         required:true,
-    }
+    },
+    comment:{
+        type:Array,
+    },
 
 
     

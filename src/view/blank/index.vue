@@ -17,7 +17,7 @@
             
             <el-col :span="4">
                 <div class="edit-box">
-                    <el-button type="primary" class="btn" @click="edit()">EDIT</el-button><br/>
+                    <el-button type="primary" class="btn" @click="edit()">ADD</el-button><br/>
                     <el-button type="success" class="btn" @click="addQuestion=true">PREVIEW</el-button><br/>
                     <el-button type="warning" class="btn" @click="addQuestion=true">DOWNLOAD</el-button><br/>
                 </div>
@@ -148,12 +148,21 @@ export default {
                     "total":this.total,
                     "subquestion":this.subquestion,
                     "qid":qid
-                }
+                };
+                
+                this.$notify({
+                        title: 'Success',
+                        message: 'Add a new question successfully!',
+                        type: 'success',
+                        duration:5000,
+                    });
+
                 addQuestion(data).then(()=>{
                     this.getData();
                     this.title='';
                     this.total='';
                     this.subquestion=[];
+                    
                 })
             }else{
                 this.$notify({
@@ -170,6 +179,13 @@ export default {
         modify(data,qid){
             modifyQuestion(data,qid).then(()=>{
                 this.getData();
+                this.$notify({
+                        title: 'Success',
+                        message: 'Save your modify successfully!',
+                        type: 'success',
+                        duration:5000,
+                    });
+
             });
             
         },

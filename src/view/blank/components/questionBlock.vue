@@ -13,9 +13,72 @@
 
         <div class="tool-box">
             <el-button type="primary" size="small" icon="el-icon-edit" @click="edit()" circle></el-button>
-            <el-button type="warning" size="small" icon="el-icon-chat-square" circle></el-button>
+            <el-button type="warning" size="small" icon="el-icon-chat-square" @click="drawer = true;" circle></el-button>
             <el-button type="danger" size="small" icon="el-icon-delete" @click="del()" circle></el-button>
         </div>
+
+
+
+
+
+        <el-drawer :visible.sync="drawer" direction="rtl" :before-close="handleClose">
+
+
+            
+            <el-card 
+ 
+            v-for="(comment, index) in question.comment"
+            :key="index"
+            style="margin:1em;"
+            :class="comment.type"
+            >
+              
+              <div class="has-check" v-if="comment.check">Has Been Checked</div>
+
+              <p>{{comment.date}} {{comment.commentor}}</p>
+              <p>{{comment.content}}</p>
+
+
+              <el-button type="danger" size="small" icon="el-icon-delete" style="float:right;margin:5px;" @click="deleteComment(index)" circle></el-button>
+              <el-button type="success" size="small" icon="el-icon-check" v-if="!comment.check" 
+                        style="float:right;margin:5px;" circle @click="comment.check=!comment.check;"></el-button>
+              <el-button type="warning" size="small" icon="el-icon-close" v-if="comment.check" 
+                        style="float:right;margin:5px;" circle @click="comment.check=!comment.check;"></el-button>
+                
+            </el-card>
+
+            <el-divider></el-divider>
+            
+            <el-card v-if="commentBlock" style="margin:1em;min-height:60px;">
+                <el-form label-width="70px">
+                    <el-form-item label="Comment" >
+                        <el-input type="textarea" placeholder="Input your comment here" :autosize="{ minRows: 2, maxRows: 6}" v-model="editComment" resize="none" clearable></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="Type">
+                        <el-select required v-model="editType" style="font-family:Times New Roman">
+                            <el-option key="Suggest" label="Suggest" value="Suggest"></el-option>
+                            <el-option key="Accept" label="Accept" value="Accept"></el-option>
+                            <el-option key="Warning" label="Warning" value="Warning"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+
+                <el-button type="danger" style="float:right;margin:5px" @click="commentBlock = false">Cancel</el-button>
+                <el-button type="primary" style="float:right;margin:5px" @click="saveComment()">Save</el-button>
+            </el-card>
+            
+            <div style="text-align:center;margin-top:5px">
+                <el-button type="primary" size="large" icon="el-icon-edit" style="padding:8px 24px;font-size:24px;margin-bottom:10em" @click="commentBlock = true;"></el-button>
+            </div>
+        </el-drawer>
+
+
+
+
+
+
+
 
 
         <!-- <EditBlock :dialogFormVisible="dialogFormVisible" :title="this.title" :total="this.total" :subquestion="this.subquestion"/> -->
@@ -69,6 +132,7 @@
 
 <script>
 import EditBlock from './editBlock'
+import {modifyComment} from '@/request/api'
 
 export default {
     props:{
@@ -82,6 +146,13 @@ export default {
             editTotal:'',
             editSub:'',
             dialogFormVisible:false,
+
+            origComment:JSON.parse(JSON.stringify(this.question.comment)),// 保存原始的comment，以免每次开关comment都要发送请求
+
+            editComment:'',
+            editType:'Suggest',
+            drawer:false,
+            commentBlock:false,
         }
     },
     methods:{
@@ -170,7 +241,37 @@ export default {
             })
             if(this.editTotal == sum)return true;
             else return false;
+        },
+
+        handleClose(){
+
+            console.log(JSON.stringify(this.origComment) != JSON.stringify(this.question.comment))
+            if(JSON.stringify(this.origComment) != JSON.stringify(this.question.comment)){
+                modifyComment(this.question.comment,this.question.qid)
+                this.origComment = JSON.parse(JSON.stringify(this.question.comment))
+            }
+                
+            this.drawer=false;
+        },
+        saveComment(){
+
+            var obj = new Object();
+            obj={
+                "type":this.editType,
+                "content":this.editComment,
+                "commentor":"KiKi",
+                "date":Date().slice(4,24),
+                "check":false,
+            }
+            this.question.comment.unshift(obj);
+            this.commentBlock = false;
+            this.editType="Suggest";
+            this.editComment="";
+        },
+        deleteComment(index){
+            this.question.comment.splice(index,1)
         }
+
     },
     components:{
         EditBlock
@@ -185,7 +286,8 @@ $(document).ready(function(){
 })
 </script>
 
-<style scoped>
+
+<style>
 
 .question-block{
     font-family: 'Times New Roman', Times, serif;
@@ -213,5 +315,40 @@ $(document).ready(function(){
     margin-top:2em;
     text-align:right;
     /* visibility:hidden */
+}
+
+
+.Warning:hover{
+    box-shadow:0px 0px  8px 0px #F56C6C
+}
+
+.Accept:hover{
+    box-shadow:0px 0px  8px 0px #67C23A
+}
+
+.Suggest:hover{
+    box-shadow:0px 0px  8px 0px #409EFF;
+}
+
+.has-check{
+    text-align:right;
+    float:right;
+    position: relative;
+    right:-2em;
+    top:-1.5em;
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #67C23A;
+    padding: 10px 2em 0 10px;
+}
+
+.el-drawer__body {
+    /* overflow: auto; */
+    overflow: auto!important;
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar{
+    display: none;
 }
 </style>

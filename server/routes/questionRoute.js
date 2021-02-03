@@ -50,6 +50,7 @@ questionRouter.route('/')
 
 
 
+//questionRouter.route('/:qid/:uid') //当想要加入更多params的时候就用这个
 questionRouter.route('/:qid')
 .get((req,res,next) => {
     Question.findById(req.params.qid)
@@ -61,7 +62,6 @@ questionRouter.route('/:qid')
     .catch((err) => next(err));
 })
 .post((req, res, next) => {
-    console.log(req.body)
     Question.update(
         { qid:parseInt(req.params.qid)},
         { $set:
@@ -93,7 +93,6 @@ questionRouter.route('/:qid')
     .catch((err) => next(err));
 })
 .delete((req, res, next) => {
-    
     Question.remove({"qid":parseInt(req.params.qid)})
     .then((resp) => {
         res.statusCode = 200;
@@ -104,6 +103,26 @@ questionRouter.route('/:qid')
 });
 
 
+questionRouter.route('/comment/:qid')
+.post((req, res, next) => {
+    
+    Question.update(
+        { qid:parseInt(req.params.qid)},
+        { $set:
+            {
+                comment:req.body
+            }
+          
+        }
+    )
+    .then((question) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(question);
+    }, (err) => next(err))
+    .catch((err) => next(err));
+
+})
 
 
 module.exports = questionRouter;

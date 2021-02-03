@@ -13,7 +13,6 @@ export function addQuestion(data){
 
 // 修改已经存在的问题
 export function modifyQuestion(data,qid){
-    console.log("qid=",qid)
     const url = 'http://localhost:3000/questions/'+qid
     return axios.post(url,data)
 }
@@ -28,6 +27,15 @@ export function fetchQuestion(){
 
 // 删除问题
 export function deleteQuestion(qid){
+
     const url = 'http://localhost:3000/questions/'+qid
     return axios.delete(url)
+}
+
+
+
+// 修改题目的评论
+export function modifyComment(data,qid){
+    const url = 'http://localhost:3000/questions/comment/'+qid
+    return axios.post(url,data)
 }
