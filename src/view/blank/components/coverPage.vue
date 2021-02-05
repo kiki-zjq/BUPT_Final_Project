@@ -1,11 +1,11 @@
 <template> 
     <div style="padding-left:2em;padding-right:2em;font-family:Times New Roman">
-        <span style='display:inline-block;margin:4em 4px 2em 0;font-weight:bold;font-size:36px;'>EBU6304</span>
+        <span style='display:inline-block;margin:4em 4px 2em 0;font-weight:bold;font-size:36px;'>{{courseNO}}</span>
         <span style="color:rgb(128,128,128);font-weight:bold">COVID-19 Alternative Assessment (Even Sem - Paper A)</span>
         <br/>
-        <p style="font-weight:bold">Joint Programme Assessments 2019/20</p>
+        <p style="font-weight:bold">Joint Programme Assessments {{courseDate}}</p>
         <br/>
-        <p style="font-weight:bold">EBU6304 Software Engineering</p>
+        <p style="font-weight:bold">{{courseNO}} {{courseName}}</p>
         <br/>
         <p><u>Answering this paper requires <b>2 hours</b></u>; Answers to be submitted within the allocated <b>6 hours window</b>.</p>
         <br/>
@@ -22,9 +22,9 @@
         </div>
 
         <p style="font-size:14px;margin-top:4em;"><b>Examiners</b></p>
-        <p style="font-size:14px;margin-left:2em">Dr Ling Ma, Dr Gokop Goteng, Dr Matthew Huntbach, Dr Luca Rossi</p>
+        <p style="font-size:14px;margin-left:2em">{{examiners}}</p>
         <b style="font-size:12px;">Copyright © Beijing University of Posts and Telecommunications & © Queen Mary University of London 2020</b>
-        <p style="font-size:12px;">Filename: 1920_EBU6304_ALT2020_A</p>
+        <p style="font-size:12px;">{{fileName}}</p>
 
 
         <br/><br/>
@@ -70,3 +70,46 @@ and student ID and any issues you are experiencing. You must use either @qmul.ac
         <el-divider></el-divider>
     </div>
 </template>
+
+
+
+<script>
+
+import {getPaperMeta} from '@/request/paperApi'
+
+
+export default {
+    data(){
+        return{
+            courseNO:"EBU6304",
+            courseName:"Software Engineering",
+            courseDate:"2019/20",
+            examiners:"Dr Ling Ma, Dr Gokop Goteng, Dr Matthew Huntbach, Dr Luca Rossi",
+            fileName:"Filename: 1920_EBU6304_ALT2020_A"
+        }
+    },
+    mounted(){
+        this.getPaperMetaInfo()
+    },
+    methods:{
+        getPaperMetaInfo(){
+            var paperid="202102042018KiKi"
+            getPaperMeta(paperid).then((res)=>{
+                var data = res.data[0];
+                
+                this.courseNO = data.courseNO;
+                this.courseName = data.courseName;
+                this.courseDate = data.courseDate;
+                this.examiners = data.examiners;
+                this.fileName = data.fileName;
+            })
+        }
+    }
+}
+</script>
+
+
+
+<style scoped>
+
+</style>

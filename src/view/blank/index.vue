@@ -86,7 +86,7 @@ import HeaderPart from './components/head'
 import ToolBox from './components/toolbox'
 import MainPart from './components/mainPart'
 
-import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/api'
+import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
 export default {
     data(){
         return{

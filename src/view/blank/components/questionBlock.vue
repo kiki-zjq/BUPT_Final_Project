@@ -132,7 +132,7 @@
 
 <script>
 import EditBlock from './editBlock'
-import {modifyComment} from '@/request/api'
+import {modifyComment} from '@/request/questionApi'
 
 export default {
     props:{

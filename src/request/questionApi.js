@@ -33,7 +33,6 @@ export function deleteQuestion(qid){
 }
 
 
-
 // 修改题目的评论
 export function modifyComment(data,qid){
     const url = 'http://localhost:3000/questions/comment/'+qid
