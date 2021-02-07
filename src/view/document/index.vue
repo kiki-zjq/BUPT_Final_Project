@@ -196,6 +196,7 @@ export default {
             
         },
         getData(){
+            console.log(this.$route.params.paperid)
             fetchQuestion().then((res)=>{
                 this.questions = res.data
             })

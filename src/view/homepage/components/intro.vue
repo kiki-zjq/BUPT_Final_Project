@@ -64,7 +64,7 @@ export default {
         position:relative;
         width:100%;
         min-width: 1400px;
-        height:300px;
+        height:360px;
         background-color: #dadce0;
         text-align: left;
         color:black;
@@ -74,14 +74,14 @@ export default {
         margin-top:20px;
     }
     .temp{
-        width:144px;
+        width:180px;
         text-align: center;
         float:left;
         margin-right:50px;
     }
     .abbr{
         width:100%;
-        height:186.1px;
+        height:240px;
         background: white;
         text-align: center;
         transition: all .4s;

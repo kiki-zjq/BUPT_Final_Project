@@ -2,42 +2,42 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-require('../models/question');
-const Question = mongoose.model('Question');
+require('../models/account');
+const Account = mongoose.model('Account');
 
-const questionRouter = express.Router();
+const accountRouter = express.Router();
 
-questionRouter.use(bodyParser.json());
-
-
+accountRouter.use(bodyParser.json());
 
 
-questionRouter.route('/')
+
+
+accountRouter.route('/')
 .get((req,res,next) => {
-    Question.find({})
-    .then((question) => {
+    Account.find({})
+    .then((account) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(question);
+        res.json(account);
     }, (err) => next(err))
     .catch((err) => next(err));
 })
 .post((req, res, next) => {
-    Question.create(req.body)
-    .then((question) => {
-        console.log('Question Created ', question);
+    Account.create(req.body)
+    .then((account) => {
+        console.log('Account Created ', account);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(question);
+        res.json(account);
     }, (err) => next(err))
     .catch((err) => next(err));
 })
 .put((req, res, next) => {
     res.statusCode = 403;
-    res.end('PUT operation not supported on /questions');
+    res.end('PUT operation not supported on /accounts');
 })
 .delete((req, res, next) => {
-    Question.remove({})
+    Account.remove({})
     .then((resp) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -50,50 +50,50 @@ questionRouter.route('/')
 
 
 
-//questionRouter.route('/:qid/:uid') //当想要加入更多params的时候就用这个
-questionRouter.route('/:qid')
+//accountRouter.route('/:qid/:uid') //当想要加入更多params的时候就用这个
+accountRouter.route('/:account')
 .get((req,res,next) => {
-    Question.findById(req.params.qid)
-    .then((question) => {
+    Account.find({"account":req.params.account})
+    .then((account) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(dish);
+        res.json(account);
     }, (err) => next(err))
     .catch((err) => next(err));
 })
 .post((req, res, next) => {
-    Question.update(
+    Account.update(
         { qid:parseInt(req.params.qid)},
         { $set:
             {
                 title:req.body.title,
                 total:req.body.total,
-                subquestion:req.body.subquestion
+                subaccount:req.body.subaccount
             }
           
         }
     )
-    .then((question) => {
+    .then((account) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(question);
+        res.json(account);
     }, (err) => next(err))
     .catch((err) => next(err));
 
 })
 .put((req, res, next) => {
-    Question.findByIdAndUpdate(req.params.qid, {
+    Account.findByIdAndUpdate(req.params.qid, {
         $set: req.body
     }, { new: true })
-    .then((question) => {
+    .then((account) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(question);
+        res.json(account);
     }, (err) => next(err))
     .catch((err) => next(err));
 })
 .delete((req, res, next) => {
-    Question.remove({"qid":parseInt(req.params.qid)})
+    Account.remove({"qid":parseInt(req.params.qid)})
     .then((resp) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -103,37 +103,27 @@ questionRouter.route('/:qid')
 });
 
 
-questionRouter.route('/comment/:qid')
-.post((req, res, next) => {
+// 删除paper的时候需要post来更新account.paper数据
+accountRouter.route('/paperRemove/:account')
+.delete((req, res, next) => {
     
-    Question.update(
-        { qid:parseInt(req.params.qid)},
+    Account.update(
+        { account:req.params.account},
         { $set:
             {
-                comment:req.body
+                paper:req.body
             }
           
         }
     )
-    .then((question) => {
+    .then((account) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(question);
+        res.json(account);
     }, (err) => next(err))
     .catch((err) => next(err));
 
 })
 
 
-questionRouter.route('/paperRemove/:paperid')
-.delete((req, res, next) => {
-    Question.remove({"paperid":req.params.paperid})
-    .then((resp) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(resp);
-    }, (err) => next(err))
-    .catch((err) => next(err));    
-});
-
-module.exports = questionRouter;
+module.exports = accountRouter;

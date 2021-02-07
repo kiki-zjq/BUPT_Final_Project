@@ -23,7 +23,20 @@ paperRouter.route('/:paperid')
     .catch((err) => next(err));
 })
 .post((req, res, next) => {
-    Paper.create(req.body)
+    // 修改paper的Meta信息 ==> 而post('/')是创建新的paper
+    Paper.update(
+        {"paperid":req.params.paperid},
+        {
+            $set:
+            {
+                courseNO:req.body.courseNO,
+                courseName:req.body.courseName,
+                courseDate:req.body.courseDate,
+                examiners:req.body.examiners,
+                fileName:req.body.fileName
+            }
+        }
+    )
     .then((paper) => {
         console.log('Paper Created ', paper);
         res.statusCode = 200;
@@ -37,7 +50,7 @@ paperRouter.route('/:paperid')
     res.end('PUT operation not supported on /papers');
 })
 .delete((req, res, next) => {
-    Paper.remove({})
+    Paper.remove({"paperid":req.params.paperid})
     .then((resp) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');

@@ -27,7 +27,14 @@ const paperSchema = new Schema({
         type: String,
         required: true
     },
-
+    createDate:{
+        type: String,
+        required: true
+    },
+    modifyDate:{
+        type: String,
+        required: true
+    },
 
     
 },  {
