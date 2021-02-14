@@ -5,6 +5,7 @@ import Homepage from '@/view/homepage/index.vue'
 
 import Document from '@/view/document/index.vue'
 import Blank from '@/view/blank/index.vue'
+import LogIn from '@/view/logIn/index.vue'
 
 Vue.use(Router)
 
@@ -24,7 +25,12 @@ export default new Router({
       path:'/Document/:paperid',
       name:'Document',
       component:Document
-    }
+    },
+    {
+      path: '/login',
+      name: 'LogIn',
+      component: LogIn
+    },
   ],
 
 

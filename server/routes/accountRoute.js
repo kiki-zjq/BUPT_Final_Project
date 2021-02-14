@@ -22,15 +22,33 @@ accountRouter.route('/')
     }, (err) => next(err))
     .catch((err) => next(err));
 })
+
+// post用来注册账号
 .post((req, res, next) => {
-    Account.create(req.body)
-    .then((account) => {
-        console.log('Account Created ', account);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(account);
-    }, (err) => next(err))
-    .catch((err) => next(err));
+
+    Account.find({"account":req.body.account})
+    .then((account)=>{
+        if(account.length==0){
+
+            Account.create(req.body)
+            .then((account) => {
+                console.log('Account Created ', account);
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(account);
+            }, (err) => next(err))
+            .catch((err) => next(err));
+
+        }else{
+            res.statusCode = 403;
+            res.end('This account already exist!');
+        }
+ 
+
+
+    })
+
+
 })
 .put((req, res, next) => {
     res.statusCode = 403;

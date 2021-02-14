@@ -9,3 +9,10 @@ export function getAccountPaper(account){
     return axios.get(url)
 }
 
+
+// 注册账号的时候使用
+export function createAccount(data){
+    const url = proxy + '/'
+    return axios.post(url,data)
+}
+
