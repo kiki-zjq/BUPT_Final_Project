@@ -31,7 +31,11 @@ export default {
     methods:{
         removePaper(paperid){
             var account="582133739@qq.com"
-            deletePaper(paperid)
+            deletePaper(paperid).then(()=>{
+                this.$emit("getPaper")
+            })
+
+
         }
     }
 }

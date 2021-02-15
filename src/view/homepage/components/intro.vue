@@ -65,7 +65,8 @@ export default {
         width:100%;
         min-width: 1400px;
         height:360px;
-        background-color: #dadce0;
+        /* background-color: #dadce0; */
+        background: radial-gradient(circle at 30% 55%, rgba(255, 121, 128, 0.9), rgba(255, 155, 160, 0.9) 40%, rgba(255, 172, 176, 0.9) 60%, rgba(255, 223, 225, 0.4));
         text-align: left;
         color:black;
         padding-top:1.5em;

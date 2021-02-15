@@ -13,6 +13,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'LogIn',
+      component: LogIn
+    },
+    {
+      path: '/Homepage',
       name: 'Homepage',
       component: Homepage
     },
@@ -25,11 +30,6 @@ export default new Router({
       path:'/Document/:paperid',
       name:'Document',
       component:Document
-    },
-    {
-      path: '/login',
-      name: 'LogIn',
-      component: LogIn
     },
   ],
 

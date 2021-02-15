@@ -1,6 +1,9 @@
 <template>
     <div>
 
+        <figure class="ball bubble ball1"></figure>
+        <figure class="ball bubble ball2"></figure>
+
 
         <div class="container">
             <div class="content">
@@ -21,10 +24,12 @@
 
 import logBlock from './components/logBlock'
 import regBlock from './components/regBlock'
+import Circle from './components/circle'
 export default {
     components:{
         logBlock,
-        regBlock
+        regBlock,
+        Circle,
     },
     data(){
         return{
@@ -52,7 +57,7 @@ export default {
 
 .content {
 	width: 800px;
-	height: 400px;
+	min-height: 200px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -96,5 +101,89 @@ export default {
 }
 
 
+
+
+
+.ball { 
+    display: inline-block; 
+    width: 250px; 
+    height: 250px; 
+    margin: 0; 
+    border-radius: 50%; 
+    position: relative; 
+    background: radial-gradient(circle at bottom, #81e8f6, #76deef 10%, #055194 80%, #062745 100%)
+} 
+.ball:before { 
+    content: ""; 
+    position: absolute; 
+    top: 1%; left: 5%; width: 90%; height: 90%; 
+    border-radius: 50%; 
+    background: radial-gradient(circle at 50% 0px, #ffffff, rgba(255, 255, 255, 0) 58%); 
+    filter: blur(5px); 
+    z-index: 2; 
+}
+.ball:after {
+    content: "";
+    position: absolute;
+    display: none;
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    border-radius: 100%;
+    -webkit-filter: blur(1px);
+    filter: blur(1px);
+    z-index: 2;
+    -webkit-transform: rotateZ(-30deg);
+    transform: rotateZ(-30deg); }
+
+ .ball.bubble {
+    background: radial-gradient(circle at 50% 55%, rgba(240, 245, 255, 0.9), rgba(240, 245, 255, 0.9) 40%, rgba(225, 238, 255, 0.8) 60%, rgba(43, 130, 255, 0.4));
+    -webkit-animation: bubble-anim 4s ease-out infinite;
+    animation: bubble-anim 4s ease-out infinite; }
+    .ball.bubble:before {
+      -webkit-filter: blur(0);
+      filter: blur(0);
+      height: 80%;
+      width: 40%;
+      background: radial-gradient(circle at 130% 130%, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0) 46%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.8) 58%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0) 100%);
+      -webkit-transform: translateX(131%) translateY(58%) rotateZ(168deg) rotateX(10deg);
+      transform: translateX(131%) translateY(58%) rotateZ(168deg) rotateX(10deg); }
+    .ball.bubble:after {
+      display: block;
+      background: radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 74%, white 80%, white 84%, rgba(255, 255, 255, 0) 100%); }
+
+.ball1{
+    top:45vh;
+    left:-25%;
+}
+.ball2.bubble{
+    left:20%;
+    background: radial-gradient(circle at 50% 55%, rgba(255, 121, 128, 0.9), rgba(255, 155, 160, 0.9) 40%, rgba(255, 172, 176, 0.9) 60%, rgba(255, 223, 225, 0.4));
+}
+@keyframes bubble-anim {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1); }
+
+  20% {
+    -webkit-transform: scaleY(0.95) scaleX(1.05);
+    transform: scaleY(0.95) scaleX(1.05); }
+
+  48% {
+    -webkit-transform: scaleY(1.1) scaleX(0.9);
+    transform: scaleY(1.1) scaleX(0.9); }
+
+  68% {
+    -webkit-transform: scaleY(0.98) scaleX(1.02);
+    transform: scaleY(0.98) scaleX(1.02); }
+
+  80% {
+    -webkit-transform: scaleY(1.02) scaleX(0.98);
+    transform: scaleY(1.02) scaleX(0.98); }
+
+  97%, 100% {
+    -webkit-transform: scale(1);
+    transform: scale(1); } }
 </style>
 

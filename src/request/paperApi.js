@@ -21,12 +21,12 @@ export function modifyPaperMeta(paperid,data){
 // 这里有一个问题，当我们要删除试卷的时候我们还需要
 // 剔除account.paper中对应的paperid
 // 剔除question中paperid为对应的所有题目
-export function deletePaper(paperid, account, data){
+export function deletePaper(paperid){
 
     const paperUrl =  proxy+'/'+paperid;
     const questionUrl = 'http://localhost:3000/questions/paperRemove/'+paperid;
-    const accountUrl = 'http://localhost:3000/accounts/paperRemove/'+account;
+    const accountUrl = 'http://localhost:3000/accounts/paperRemove/'+paperid;
     axios.delete(questionUrl);
-    //axios.delete(accountUrl,data) 先不实现从客户数据库进行删除
+    axios.delete(accountUrl)
     return axios.delete(paperUrl);
 }

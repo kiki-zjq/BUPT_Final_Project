@@ -36,9 +36,18 @@ export default {
                 "paper":[]
             }
             createAccount(obj).then((res)=>{
-                console.log(res)
+                this.$notify({
+                    title: 'Success',
+                    message: 'Register Successfully',
+                    type: 'success',
+                    duration:5000,
+                });
             }).catch((res)=>{
-                console.log(res)
+                this.$notify.error({
+                    title: 'Error',
+                    message: 'Account Already Exist',
+                    duration:5000,
+                });
             })
         }
     }

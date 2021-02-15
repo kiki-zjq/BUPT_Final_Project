@@ -16,3 +16,7 @@ export function createAccount(data){
     return axios.post(url,data)
 }
 
+export function checkAccount(account,pwd){
+    const url = proxy + '/checkAccount/'+account+'/'+pwd;
+    return axios.get(url)
+}

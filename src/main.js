@@ -16,13 +16,13 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store({
   state:{
-      language:'Chinese',
-      Page:'Homepage',
-      Intro:'',
+      account:'',
+      password:'',
     },
   mutations:{
-        changePage(state,page){
-            state.Page = page;
+        changeAccount(state,account,password){
+            state.account = account;
+            state.password = password;
         },
         changeIntro(state,intro){
             state.Intro= intro
