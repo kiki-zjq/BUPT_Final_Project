@@ -5,7 +5,7 @@ import Homepage from '@/view/homepage/index.vue'
 
 import Document from '@/view/document/index.vue'
 import Blank from '@/view/blank/index.vue'
-import LogIn from '@/view/logIn/index.vue'
+import LogIn from '@/view/logIn/index2.vue'
 
 Vue.use(Router)
 

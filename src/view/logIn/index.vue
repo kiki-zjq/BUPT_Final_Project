@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <div class="back">
         <figure class="ball bubble ball1"></figure>
         <figure class="ball bubble ball2"></figure>
 
@@ -12,7 +12,7 @@
             </div>
         </div>
    
-   
+        </div>
     </div>
 </template>
 
@@ -48,7 +48,11 @@ export default {
 
 
 <style scoped>
-
+.back{
+    background-color:black;
+    height:100%;
+    width:100%;
+}
 .container {
 	width: 100%;
 	height: 100%;
