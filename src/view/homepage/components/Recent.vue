@@ -48,9 +48,13 @@ export default {
 
 <style scoped>
 .recent{
-    min-height: 800px;
-    width:80%;
-    margin:10px auto;
+    background-image:linear-gradient(to top right,#2C5364,#203A43,#0F2027);
+    width:100%;
+    min-width: 1400px;
+    height:90vh;
+    height:100%;
+    box-sizing: border-box;
+    margin:0px auto;
     color:black;
     font-size:18px;
     text-align:left;

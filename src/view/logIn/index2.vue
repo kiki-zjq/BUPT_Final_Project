@@ -1,10 +1,15 @@
 <template>
     <div class="back">
         <div class="content-block">
-            <span class="title">JOIN AND CREATE</span><br/>
-            <span class="title">YOUR OWN TEST</span>
-            <!-- <logBlock v-if="isLogIn" @goReg="changeStatus"/>
-            <regBlock v-if="!isLogIn" @goLogin="changeStatus"/> -->
+            <div v-if="welcome">
+                <span class="title">JOIN AND CREATE</span><br/>
+                <span class="title">YOUR OWN TEST</span><br/>
+                <el-button class="start-btn" @click="welcome=!welcome" round>Get Started</el-button>
+            </div>
+            <div v-if="!welcome">
+                <logBlock v-if="isLogIn" @goReg="changeStatus"/>
+                <regBlock v-if="!isLogIn" @goLogin="changeStatus"/>
+            </div>
         </div>
     </div>    
 </template>
@@ -19,8 +24,8 @@ export default {
     },
     data(){
         return{
+            welcome:true,
             isLogIn:true,
-        
         }
     },
     methods:{
@@ -55,7 +60,7 @@ background-size:75px 75px,75px 75px,15px 15px,15px 15px; */
     min-height:300px;
     padding:20px;
     /* border:1px solid white; */
-    top: 30%;
+    top: 25%;
 	left: 33%;
     position: absolute;
     overflow: hidden;
@@ -84,7 +89,32 @@ background-size:75px 75px,75px 75px,15px 15px,15px 15px; */
     font-size:28px;
     color:white;
     font-weight:bold;
-    font-family:'Times New Roman', Times, serif
+    font-family:'Times New Roman', Times, serif;
+    animation: start-btn-animate 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+.start-btn{
+    color:white;
+    border:none;
+    margin-top:1em;
+    font-size:24px;
+    font-weight:bold;
+    font-family:'Times New Roman', Times, serif;
+    /* background:#daa1c4; */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    background-image: linear-gradient(to top left,#50867d,#70aaa0,#90bdb5,#a5cac3);
+    animation: start-btn-animate 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    /* background-image: linear-gradient(to top left, #b94c8f,#c771a6,#d189b5,#dfaecc); */
+}
+
+@keyframes start-btn-animate{
+      0% {
+            transform: translateY(75px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
 }
 
 </style>

@@ -30,7 +30,7 @@ export default {
 .header{
     color:black;
     width:100%;
-    height:60px;
+    height:10vh;
     z-index:9;
     position: relative;
     background-color:rgba(255,255,255,1);

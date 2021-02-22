@@ -1,106 +1,51 @@
 <template>
-    <div class="intro-page">
-        <div style="width:80%;margin:auto;">
-            <span><b>Create New Document</b></span><br/>
-            <div class="temp-list">
+    <div class="intro-block">
+        <!-- <img src="../img/logo.png" class="logo"/> -->
+        <h1 class="title">Introduction</h1>
+        <img src="../img/sample.png" class="sample"/>
+        <img src="../img/sample.png" class="sample"/>
+        <p class="content">This is a fantastic website where you can create your own test paper</p>
+        <p class="content">You are free to choose the test format and add questions to the test.</p>
+        <p class="content">The site also allows multiple people to work together on the test paper, and you can leave your own comments on the different questions to remind the co-authors.</p>
 
-                <div class="temp" @click="create(0)">
-                    <div class="abbr">
-                        <i class="el-icon-plus"></i>
-                    </div>
-                    <div class="description">
-                        BLANK
-                    </div>
-                </div>
+        <img src="../img/sample.png" class="sample2"/>
+        <img src="../img/sample.png" class="sample2"/>
 
-
-                <div class="temp">
-                    <div class="abbr">
-                        <i class="el-icon-plus"></i>
-                    </div>
-                    <div class="description">
-                        Temp1
-                    </div>
-                </div>
-
-
-                <div class="temp">
-                    <div class="abbr">
-                        <i class="el-icon-plus"></i>
-                    </div>
-                    <div class="description">
-                        Temp2
-                    </div>
-                </div>
-            
-
-
-
-            </div>
-        </div>
     </div>
 </template>
 
-<script>
-export default {
-    props:{
-       
-    },
-    methods:{
-        create(val){
-            switch(val){
-                case 0:this.$router.push('/Blank');
-            }
-        }
-    }
-
-}
-</script>
-
-
 <style scoped>
-    .intro-page{
-       
-        position:relative;
-        width:100%;
-        min-width: 1400px;
-        height:360px;
-        /* background-color: #dadce0; */
-        background: radial-gradient(circle at 30% 55%, rgba(255, 121, 128, 0.9), rgba(255, 155, 160, 0.9) 40%, rgba(255, 172, 176, 0.9) 60%, rgba(255, 223, 225, 0.4));
-        text-align: left;
-        color:black;
-        padding-top:1.5em;
-    }
-    .temp-list{
-        margin-top:20px;
-    }
-    .temp{
-        width:180px;
-        text-align: center;
-        float:left;
-        margin-right:50px;
-    }
-    .abbr{
-        width:100%;
-        height:240px;
-        background: white;
-        text-align: center;
-        transition: all .4s;
-    }
-    .abbr:hover{
-        cursor:pointer;
-        margin-top:10px;
-    }
-    .description{
-        margin-top:1em;
-        color:black;
-        
-    }
-    .el-icon-plus{
-        width:50%;
-        height:50%;
-        transform: translateY(70%);
-        font-weight: bold;
-        font-size:36px;
-    }
+.intro-block{
+    background-image:linear-gradient(to top right,#2C5364,#203A43,#0F2027);
+    width:100%;
+    min-width: 1400px;
+    height:90vh;
+    height:100%;
+    box-sizing: border-box;
+    padding:40px;
+}
+.title{
+    font-size:48px;
+    color:white;
+    margin:0;
+    text-align: left;
+}
+.content{
+    text-align: left;
+    color:white;
+}
+.sample{
+    float:right;
+    width:30%;
+    margin:-2em 1em 3em 1em;
+    clear:right;
+}
+.sample2{
+    float:left;
+    width:30%;
+    margin:-2em 1em 3em 1em;
+}
+.logo{
+    float:left;
+}
 </style>

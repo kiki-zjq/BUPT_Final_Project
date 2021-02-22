@@ -1,29 +1,45 @@
 <template>
     <div class="homepage">
-        <HeaderPart id="header-part" v-bind:language='language' v-on:changeLang='changeLang()'/>
-        <IntroPart id="intro"/>
-        <Recent id="recent" :recentPaper="recent" @getPaper="getPaper"/>
-        <FooterPart class='footer'/>
+        <!-- <HeaderPart id="header-part" v-bind:language='language' v-on:changeLang='changeLang()'/> -->
+        <el-carousel trigger="click" height="100vh" >
+            <el-carousel-item>
+                <IntroPart/>
+            </el-carousel-item>
+
+            <el-carousel-item>
+                <TempPart id="temp"/>
+            </el-carousel-item>
+            
+            <el-carousel-item>
+                <Recent id="recent" :recentPaper="recent" @getPaper="getPaper"/>
+            </el-carousel-item>
+    
+        </el-carousel>
+
+        <!-- <FooterPart class='footer'/> -->
     </div>
 </template>
 
 <script>
 import HeaderPart from './components/header'
 import FooterPart from './components/footer'
-import IntroPart from './components/intro'
+import TempPart from './components/temp'
 import Recent from './components/recent'
+import IntroPart from './components/intro'
 
 import {getAccountPaper} from '@/request/accountApi'
 export default {
     components:{
         FooterPart,
         HeaderPart,
-        IntroPart,
+        TempPart,
         Recent,
+        IntroPart
     },
     data(){
         return{
             recent:[],
+            activeName: '1',
         }
     },
     methods:{
@@ -43,7 +59,5 @@ export default {
 </script>
 
 <style scoped>
-.homepage{
-    
-}
+
 </style>
