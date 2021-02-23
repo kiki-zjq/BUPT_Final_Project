@@ -1,7 +1,7 @@
 <template>
     <div class="intro-page">
-        <div style="width:80%;margin:auto;">
-            <span><b>Create New Document</b></span><br/>
+        <div style="width:90%;margin:auto;">
+            <span class="title"><b>Create New Document</b></span><br/>
             <div class="temp-list">
 
                 <div class="temp" @click="create(0)">
@@ -61,16 +61,25 @@ export default {
 <style scoped>
     .intro-page{
        
-        position:relative;
+        background-image:linear-gradient(to top right,#2C5364,#203A43,#0F2027);
         width:100%;
         min-width: 1400px;
-        height:360px;
-        background-image: linear-gradient(to top right,#bdc3c7,#2c3e50);
-        /* background-color: #dadce0; */
-        /* background: radial-gradient(circle at 30% 55%, rgba(255, 121, 128, 0.9), rgba(255, 155, 160, 0.9) 40%, rgba(255, 172, 176, 0.9) 60%, rgba(255, 223, 225, 0.4)); */
-        text-align: left;
+        height:90vh;
+        height:100%;
+        box-sizing: border-box;
+        padding:40px;
+        margin:0px auto;
         color:black;
-        padding-top:1.5em;
+        font-size:18px;
+        text-align:left;
+        /* background-image: linear-gradient(to top right,#bdc3c7,#2c3e50); */
+        /* background-color: #dadce0; */
+    }
+    .title{
+        color:white;
+        font-size: 36px;
+        font-family: 'Times New Roman', Times, serif;
+
     }
     .temp-list{
         margin-top:20px;
@@ -94,7 +103,8 @@ export default {
     }
     .description{
         margin-top:1em;
-        color:black;
+        color:white;
+        font-family: 'Times New Roman', Times, serif;
         
     }
     .el-icon-plus{

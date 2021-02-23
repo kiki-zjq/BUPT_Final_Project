@@ -78,7 +78,7 @@
 
         </el-dialog> 
 
-
+        <InitMeta :initMeta="initMeta" @finishInitMeta="initMeta=false"/>
 
 
     </div>    
@@ -89,7 +89,7 @@
 import HeaderPart from './components/head'
 import ToolBox from './components/toolbox'
 import MainPart from './components/mainPart'
-
+import InitMeta from './components/initMeta'
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
 export default {
@@ -102,6 +102,7 @@ export default {
             total:'',   
             subquestion:[],
             isEditMeta:false,
+            initMeta:false,
         };
     },
     methods:{
@@ -240,12 +241,14 @@ export default {
         }
     },
     mounted(){
+        this.initMeta = true;
         this.getData();
     },
     components:{
         HeaderPart,
         ToolBox,
         MainPart,
+        InitMeta
     }
 }
 </script>

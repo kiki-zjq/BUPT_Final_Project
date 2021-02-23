@@ -83,10 +83,13 @@ export default {
 
 .thumb-block{
     border:gray 1px solid;
-    width:180px;
+    width:200px;
+    background-color:white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
     text-align: center;
     float:left;
     margin-right:50px;
+    margin-bottom: 50px;
 }
 
 .thumb-pic{

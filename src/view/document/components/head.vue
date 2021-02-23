@@ -25,6 +25,7 @@ export default {
     width:100%;
     height:100px;
     background-color: white;
+    /* background-image: linear-gradient(to top right,#bdc3c7,#2c3e50); */
     border-bottom: #333 solid 1px;
 }
 .logo{

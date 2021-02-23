@@ -1,15 +1,18 @@
 <template>
-    <div class="recent">
-        <span><b>Recent</b></span><br/>
-        
-        <div class="thumb-list">
-            <Thumbnail 
-                v-for="(paper,index) in recentPaper" 
-                :key="index"
-                :paperid="paper"
-                @remove="removePaper"
-            />
+    <div class="recent" >
+        <div style="width:90%;margin:auto;">
+            <span class="title"><b>Recent</b></span><br/>
             
+            <div class="thumb-list">
+
+                <Thumbnail 
+                    v-for="(paper,index) in recentPaper" 
+                    :key="index"
+                    :paperid="paper"
+                    @remove="removePaper"
+                />
+
+            </div>
         </div>
     
     </div>
@@ -54,13 +57,28 @@ export default {
     height:90vh;
     height:100%;
     box-sizing: border-box;
+    padding:40px;
     margin:0px auto;
     color:black;
     font-size:18px;
     text-align:left;
 }
 
+.title{
+    font-size:36px;
+    color:white;
+    /* margin:0; */
+    text-align: left;
+    font-family: 'Times New Roman', Times, serif;
+}
+
 .thumb-list{
     margin-top:20px;
+    height:85%;
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar{
+    display: none;
 }
 </style>

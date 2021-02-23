@@ -262,7 +262,8 @@ export default {
     top:100px;
 }
 .blank{
-    background-color: #dadce0;
+    /* background-color: #dadce0; */
+    background-image:linear-gradient(to top right,#2C5364,#203A43,#0F2027);
 }
 .btn{
     margin-top:20px;
