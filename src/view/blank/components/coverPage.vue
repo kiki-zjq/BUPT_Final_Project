@@ -115,23 +115,20 @@ export default {
     },
     data(){
         return{
-            courseNO:"EBU6304",
-            courseName:"Software Engineering",
-            courseDate:"2019/20",
-            examiners:"Dr Ling Ma, Dr Gokop Goteng, Dr Matthew Huntbach, Dr Luca Rossi",
-            fileName:"1920_EBU6304_ALT2020_A",
-            paperid:"",
+            courseNO:"",
+            courseName:"",
+            courseDate:"",
+            examiners:"",
+            fileName:"",
         }
     },
     mounted(){
-        this.getPaperMetaInfo()
+        // this.getPaperMetaInfo()
     },
     methods:{
-        getPaperMetaInfo(){
-            var paperid="202102042018KiKi"
+        getPaperMetaInfo(paperid){
             getPaperMeta(paperid).then((res)=>{
                 var data = res.data[0];
-                this.paperid = data.paperid;
                 this.courseNO = data.courseNO;
                 this.courseName = data.courseName;
                 this.courseDate = data.courseDate;

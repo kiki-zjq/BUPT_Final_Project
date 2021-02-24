@@ -45,10 +45,13 @@ export default {
     methods:{
         getPaper(){
             var account = this.$store.state.account;
-
             getAccountPaper(account).then((res)=>{
                 var data = res.data[0];
                 this.recent = data.paper;
+
+                //this.$set(this,recent,[...data.paper]);
+                console.log(this.recent)
+
             })
         }
     },

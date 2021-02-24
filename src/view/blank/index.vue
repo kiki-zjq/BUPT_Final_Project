@@ -78,7 +78,6 @@
 
         </el-dialog> 
 
-        <InitMeta :initMeta="initMeta" @finishInitMeta="initMeta=false"/>
 
 
     </div>    
@@ -88,7 +87,7 @@
 <script>
 import HeaderPart from './components/head'
 import ToolBox from './components/toolbox'
-import MainPart from './components/mainPart'
+import MainPart from './mainPart'
 import InitMeta from './components/initMeta'
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'

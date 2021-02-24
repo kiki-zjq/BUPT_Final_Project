@@ -15,7 +15,7 @@
     
 
             <br/>
-            <span class="modify-time">2021/02/05</span>
+            <span class="modify-time">{{modifyDate}}</span>
             
 
             <el-popover
@@ -37,7 +37,7 @@
 
 
 <script>
-import {getPaperMeta, deletePaper} from '@/request/paperApi'
+import {getPaperMeta} from '@/request/paperApi'
 
 export default {
     props:{
@@ -46,6 +46,7 @@ export default {
     data(){
         return{
             fileName:'',
+            modifyDate:'',
             docURL:'http://localhost:8081/#/Document/'
         }
     },
@@ -54,7 +55,9 @@ export default {
             getPaperMeta(this.paperid).then((res)=>{
                 var data = res.data[0];
                 this.fileName = data.fileName;
+                this.modifyDate = data.modifyDate;
                 this.docURL = this.docURL + data.paperid
+                console.log(this.fileName)
             })
         },
         removePaper(){
@@ -65,12 +68,19 @@ export default {
         }
     },
     mounted(){
+        console.log("nimade:"+this.paperid)
+        // this.getRecentPaperInfo();
+    },
+    created(){
+        console.log("create")
         this.getRecentPaperInfo();
     },
     computed:{
         displayFileName:function(){
             if(this.fileName.length>10){
                 return this.fileName.slice(0,10)+"..."
+            }else{
+                return this.fileName
             }
         }
     }

@@ -16,15 +16,16 @@
              <el-divider></el-divider>
              <p style="text-align:center;font-family:Times New Roman">END OF PAPER</p>
         </div>
+        <InitMeta :initMeta="initMeta" @finishInitMeta="finishInit"/>
     </div>    
 </template>
 
 <script>
 
 
-import QuestionBlock from './questionBlock'
-import Cover from './coverPage'
-
+import QuestionBlock from './components/questionBlock'
+import Cover from './components/coverPage'
+import InitMeta from './components/initMeta'
 
 import {modifyPaperMeta} from '@/request/paperApi'
 
@@ -36,7 +37,8 @@ export default {
     },
     data(){
         return{
-            
+            initMeta:false,
+            paperid:'',
         }
     },
     methods:{
@@ -55,7 +57,7 @@ export default {
                 examiners:this.$refs.coverPage.examiners,
                 fileName:this.$refs.coverPage.fileName
             }
-            modifyPaperMeta(this.$refs.coverPage.paperid, obj).then(()=>{
+            modifyPaperMeta(this.paperid, obj).then(()=>{
                 this.$notify({
                         title: 'Success',
                         message: 'Save Meta Information Successfully!',
@@ -66,14 +68,20 @@ export default {
         },
         cancelMeta(){
             this.$refs.coverPage.getPaperMetaInfo();
+        },
+        finishInit(paperid){
+            this.initMeta=false;
+            this.paperid = paperid;
+            this.$refs.coverPage.getPaperMetaInfo(paperid);
         }
     },
     mounted(){
-        
+        this.initMeta = true;
     },
     components:{
         QuestionBlock,
-        Cover
+        Cover,
+        InitMeta
     }
 }
 </script>

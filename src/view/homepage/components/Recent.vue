@@ -6,8 +6,8 @@
             <div class="thumb-list">
 
                 <Thumbnail 
-                    v-for="(paper,index) in recentPaper" 
-                    :key="index"
+                    v-for="(paper) in recentPaper" 
+                    :key="paper"
                     :paperid="paper"
                     @remove="removePaper"
                 />
@@ -23,22 +23,27 @@
 
 import Thumbnail from './thumb.vue';
 import {getPaperMeta, deletePaper} from '@/request/paperApi'
+import {getAccountPaper} from '@/request/accountApi'
 
 export default {
+    inject:['reload'],
     props:{
-        recentPaper:[]
+        recentPaper:{},
     },
     components:{
         Thumbnail
     },
     methods:{
         removePaper(paperid){
-            var account="582133739@qq.com"
             deletePaper(paperid).then(()=>{
-                this.$emit("getPaper")
+                var index = this.recentPaper.indexOf(paperid);
+                this.recentPaper.splice(index,1)
             })
-
-
+        }
+    },
+    computed:{
+        allPaper:function(){
+            return this.recentPaper
         }
     }
 }

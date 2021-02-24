@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-        <router-view/>
+        <router-view v-if="isRouterAlive"/>
 
 
   </div>
@@ -10,18 +10,22 @@
 <script>
 export default {
   name: 'App',
+  provide(){
+    return{
+      reload:this.reload
+    }
+  },
   data(){
     return{
-        language:'Chinese',
+        isRouterAlive:true,
     }
   },
   methods:{
-    changeLang(){
-      if (this.language == 'Chinese'){
-         this.language = 'English'
-      }else{
-        this.language = 'Chinese'
-      } 
+    reload(){
+      this.isRouterAlive=false;
+      this.$nextTick(function(){
+        this.isRouterAlive=true;
+      })
     }
   },
 

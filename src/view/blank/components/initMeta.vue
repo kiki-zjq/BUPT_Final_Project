@@ -25,7 +25,11 @@
 
 </template>
 <script>
+import {dateMixin} from '@/mixins/DateMixin.js';
+import {initPaperMeta} from '@/request/paperApi'
+
 export default {
+    mixins:[dateMixin],
     props:{
         initMeta:false,
     },
@@ -40,14 +44,21 @@ export default {
     },
     methods:{
         save(){
+            var account = this.$store.state.account;
+            var createDate = '';
+            var modifyDate = '';
             var obj = {
+                paperid :this.formatPaperIDDate()+account,
                 courseNO:this.courseNO,
                 courseName:this.courseName,
                 courseDate:this.courseDate,
                 examiners:this.examiners,
-                fileName:this.fileName
+                fileName:this.filename,
+                createDate:this.formatDate(),
+                modifyDate:this.formatDate(),
             }
-            this.$emit("finishInitMeta");
+            initPaperMeta(account,obj);
+            this.$emit("finishInitMeta",obj.paperid);
         }
     }
 }
