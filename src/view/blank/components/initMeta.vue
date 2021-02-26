@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="Edit Test Meta Information" :visible.sync="initMeta">
+    <el-dialog title="Edit Test Meta Information" :visible.sync="initMeta" >
         <el-form class="init-form" label-width="100px">
             <el-form-item label="Course NO" >
                     <el-input v-model="courseNO" resize="none" clearable style="width:50%" placeholder="EBU6304"></el-input>
@@ -32,6 +32,7 @@ export default {
     mixins:[dateMixin],
     props:{
         initMeta:false,
+        paperid:'',
     },
     data(){
         return{
@@ -48,7 +49,7 @@ export default {
             var createDate = '';
             var modifyDate = '';
             var obj = {
-                paperid :this.formatPaperIDDate()+account,
+                paperid :this.paperid,
                 courseNO:this.courseNO,
                 courseName:this.courseName,
                 courseDate:this.courseDate,
@@ -58,8 +59,8 @@ export default {
                 modifyDate:this.formatDate(),
             }
             initPaperMeta(account,obj);
-            this.$emit("finishInitMeta",obj.paperid);
-        }
+            this.$emit("finishInitMeta");
+        },
     }
 }
 </script>

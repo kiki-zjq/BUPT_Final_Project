@@ -21,7 +21,10 @@ const questionSchema = new Schema({
     comment:{
         type:Array,
     },
-
+    paperid: {
+        type: String,
+        required: true
+    },
 
     
 },  {

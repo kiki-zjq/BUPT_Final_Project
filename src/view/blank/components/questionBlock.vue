@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import EditBlock from './editBlock'
+import EditBlock from './addQuestionBlock'
 import {modifyComment} from '@/request/questionApi'
 
 export default {

@@ -57,7 +57,6 @@ export default {
                 this.fileName = data.fileName;
                 this.modifyDate = data.modifyDate;
                 this.docURL = this.docURL + data.paperid
-                console.log(this.fileName)
             })
         },
         removePaper(){
@@ -68,11 +67,9 @@ export default {
         }
     },
     mounted(){
-        console.log("nimade:"+this.paperid)
-        // this.getRecentPaperInfo();
+
     },
     created(){
-        console.log("create")
         this.getRecentPaperInfo();
     },
     computed:{

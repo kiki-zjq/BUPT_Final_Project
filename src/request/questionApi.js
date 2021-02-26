@@ -19,9 +19,9 @@ export function modifyQuestion(data,qid){
 
 
 // 读取MongoDB(Final.question)中的问题数据
-export function fetchQuestion(){
+export function fetchQuestion(paperid){
     //const url ='https://www.fastmock.site/mock/f94cbaef21e3b2d49f3980edb7626137/final/getQuestion'
-    const url = 'http://localhost:3000/questions'
+    const url = 'http://localhost:3000/questions/getQuestion/'+paperid
     return axios.get(url)
 }
 

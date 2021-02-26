@@ -136,4 +136,22 @@ questionRouter.route('/paperRemove/:paperid')
     .catch((err) => next(err));    
 });
 
+
+
+
+
+questionRouter.route('/getQuestion/:paperid')
+.get((req, res, next) =>{
+    console.log(req.params.paperid)
+    Question.find({"paperid":req.params.paperid})
+    .then((question) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(question);
+    }, (err) => next(err))
+    .catch((err) => next(err));
+})
+
+
+
 module.exports = questionRouter;

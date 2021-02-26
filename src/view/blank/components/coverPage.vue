@@ -92,13 +92,14 @@
         <br/>
 
         <p>If you have any problems relating to access or submitting during the assessment period, please contact 
-the email (it-issues@qmbupt.org), state the module code in the subject, and clearly state your name 
-and student ID and any issues you are experiencing. You must use either @qmul.ac.uk or 
-@bupt.edu.cn email address. Requests from external email addresses will not be processed.</p>
+            the email (it-issues@qmbupt.org), state the module code in the subject, and clearly state your name 
+            and student ID and any issues you are experiencing. You must use either @qmul.ac.uk or 
+            @bupt.edu.cn email address. Requests from external email addresses will not be processed.</p>
         
         
         
         <el-divider></el-divider>
+        <InitMeta :initMeta="initMeta" :paperid="paperid" @finishInitMeta="finishInit"/>
     </div>
 </template>
 
@@ -107,11 +108,15 @@ and student ID and any issues you are experiencing. You must use either @qmul.ac
 <script>
 
 import {getPaperMeta} from '@/request/paperApi'
-
+import InitMeta from './initMeta'
 
 export default {
+    components:{
+        InitMeta
+    },
     props:{
         isEditMeta:false,
+        paperid:'',
     },
     data(){
         return{
@@ -120,10 +125,12 @@ export default {
             courseDate:"",
             examiners:"",
             fileName:"",
+            initMeta:false,
         }
     },
     mounted(){
         // this.getPaperMetaInfo()
+        this.initMeta=true;
     },
     methods:{
         getPaperMetaInfo(paperid){
@@ -135,7 +142,11 @@ export default {
                 this.examiners = data.examiners;
                 this.fileName = data.fileName;
             })
-        }
+        },
+        finishInit(){
+            this.initMeta=false;
+            this.getPaperMetaInfo(paperid);
+        },
     }
 }
 </script>
