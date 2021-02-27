@@ -99,7 +99,7 @@
         
         
         <el-divider></el-divider>
-        <InitMeta :initMeta="initMeta" :paperid="paperid" @finishInitMeta="finishInit"/>
+        
     </div>
 </template>
 
@@ -108,12 +108,9 @@
 <script>
 
 import {getPaperMeta} from '@/request/paperApi'
-import InitMeta from './initMeta'
+
 
 export default {
-    components:{
-        InitMeta
-    },
     props:{
         isEditMeta:false,
         paperid:'',
@@ -128,10 +125,7 @@ export default {
             initMeta:false,
         }
     },
-    mounted(){
-        // this.getPaperMetaInfo()
-        this.initMeta=true;
-    },
+
     methods:{
         getPaperMetaInfo(paperid){
             getPaperMeta(paperid).then((res)=>{
@@ -142,10 +136,6 @@ export default {
                 this.examiners = data.examiners;
                 this.fileName = data.fileName;
             })
-        },
-        finishInit(){
-            this.initMeta=false;
-            this.getPaperMetaInfo(paperid);
         },
     }
 }

@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import EditBlock from './editBlock'
+import EditBlock from './addQuestionBlock'
 import {modifyComment} from '@/request/questionApi'
 
 export default {
@@ -245,7 +245,7 @@ export default {
 
         handleClose(){
 
-            console.log(JSON.stringify(this.origComment) != JSON.stringify(this.question.comment))
+            // console.log(JSON.stringify(this.origComment) != JSON.stringify(this.question.comment))
             if(JSON.stringify(this.origComment) != JSON.stringify(this.question.comment)){
                 modifyComment(this.question.comment,this.question.qid)
                 this.origComment = JSON.parse(JSON.stringify(this.question.comment))
@@ -259,7 +259,7 @@ export default {
             obj={
                 "type":this.editType,
                 "content":this.editComment,
-                "commentor":"KiKi",
+                "commentor":this.$store.state.name,
                 "date":Date().slice(4,24),
                 "check":false,
             }

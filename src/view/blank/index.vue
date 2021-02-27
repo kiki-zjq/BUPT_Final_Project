@@ -20,6 +20,7 @@
                             @modify="modify"
                             @del="del"
                         />
+                        <!-- del和modify搞定 可以删除和修改问题 -->
                         
                         <el-divider></el-divider>
                         <p style="text-align:center;font-family:Times New Roman">END OF PAPER</p>
@@ -31,7 +32,7 @@
             <el-col :span="4">
                 <div class="edit-box">
                     
-                    <ToolBox @addNewQuestion="addBlock=true" @editMeta="isEditMeta=true"/>
+                    <ToolBox @addNewQuestion="addBlock=true" @editMeta="isEditMeta=true" @saveMeta="saveMeta" @cancelMeta="cancelMeta"/>
                 </div>
             </el-col>
                     
@@ -41,8 +42,8 @@
 
 
         <AddQuestionBlock :addBlock="addBlock" @cancel="addBlock=false" @save="save" />
-        
-
+        <!-- addquestionblock 全部处理完毕：可以加问题了 -->
+        <InitMeta :initMeta="openInitMeta" :paperid="paperid" @finishInitMeta="finishInit"/>
 
 
     </div>    
@@ -52,7 +53,6 @@
 <script>
 import HeaderPart from './components/head'
 import ToolBox from './components/toolbox'
-import MainPart from './mainPart'
 import InitMeta from './components/initMeta'
 import AddQuestionBlock from './components/addQuestionBlock'
 import Cover from './components/coverPage'
@@ -61,6 +61,7 @@ import QuestionBlock from './components/questionBlock'
 
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
+import {modifyPaperMeta} from '@/request/paperApi'
 import {dateMixin} from '@/mixins/DateMixin.js';
 
 export default {
@@ -68,7 +69,6 @@ export default {
     components:{
         HeaderPart,
         ToolBox,
-        MainPart,
         InitMeta,
         AddQuestionBlock,
         Cover,
@@ -82,26 +82,47 @@ export default {
 
             isEditMeta:false,
             
-
+            initMeta:1,
             paperid:'',
         };
     },
     methods:{
-        
+        getData(){
+            fetchQuestion(this.paperid).then((res)=>{
+                this.questions = res.data
+            })
+        },
+
         
         del(qid){
             deleteQuestion(qid)
             this.getData()
         },
         
+        modify(data,qid){
+            modifyQuestion(data,qid).then(()=>{
+                this.getData();
+                this.$notify({
+                        title: 'Success',
+                        message: 'Save your modify successfully!',
+                        type: 'success',
+                        duration:5000,
+                    });
+
+            });
+            
+        },
+
+
         
         save(data){
                 
                 this.addBlock = false;
-                var n = this.questions.length;
-                var qid = n==0?1:this.questions[n-1].qid+1;
+                // var n = this.questions.length;
+                // var qid = n==0?1:this.questions[n-1].qid+1;
 
-                data.qid = qid;
+                // data.qid = qid;
+                data.qid = Date.parse( new Date());
                 data.paperid = this.paperid;
                 
                 this.$notify({
@@ -119,46 +140,49 @@ export default {
 
 
         },
-        modify(data,qid){
-            modifyQuestion(data,qid).then(()=>{
-                this.getData();
-                this.$notify({
-                        title: 'Success',
-                        message: 'Save your modify successfully!',
-                        type: 'success',
-                        duration:5000,
-                    });
-
-            });
-            
-        },
 
 
 
 
-        getData(){
-            fetchQuestion(this.paperid).then((res)=>{
-                this.questions = res.data
-            })
-        },
-
+        
         saveMeta(){
             this.$confirm('Are you sure you want to save your changes?', 'Prompt', {
                 confirmButtonText: 'Yes',
                 cancelButtonText: 'No',
                 type: 'warning'
             }).then(() => {
-        
-                this.$refs.mainPart.saveMeta();
+                
+                var obj = {
+                    courseNO:this.$refs.coverPage.courseNO,
+                    courseName:this.$refs.coverPage.courseName,
+                    courseDate:this.$refs.coverPage.courseDate,
+                    examiners:this.$refs.coverPage.examiners,
+                    fileName:this.$refs.coverPage.fileName
+                }
+                modifyPaperMeta(this.paperid, obj).then(()=>{
+                    this.$notify({
+                            title: 'Success',
+                            message: 'Save Meta Information Successfully!',
+                            type: 'success',
+                            duration:3000,
+                        });
+                })
                 this.isEditMeta = false;
                 
             });
             
         },
         cancelMeta(){
-            
-            
+            this.$refs.coverPage.getPaperMetaInfo(this.paperid);
+            this.isEditMeta = false;
         },
+
+        finishInit(val){
+            this.initMeta+=1;
+            if(val==1){
+                this.$refs.coverPage.getPaperMetaInfo(this.paperid);
+            }
+        }
 
     },
     mounted(){
@@ -166,6 +190,11 @@ export default {
 
         this.paperid = this.formatPaperIDDate()+account;
         this.getData();
+    },
+    computed:{
+        openInitMeta:function(){
+            return this.initMeta==1;   
+        }
     },
 
 }

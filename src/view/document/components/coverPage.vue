@@ -92,13 +92,14 @@
         <br/>
 
         <p>If you have any problems relating to access or submitting during the assessment period, please contact 
-the email (it-issues@qmbupt.org), state the module code in the subject, and clearly state your name 
-and student ID and any issues you are experiencing. You must use either @qmul.ac.uk or 
-@bupt.edu.cn email address. Requests from external email addresses will not be processed.</p>
+            the email (it-issues@qmbupt.org), state the module code in the subject, and clearly state your name 
+            and student ID and any issues you are experiencing. You must use either @qmul.ac.uk or 
+            @bupt.edu.cn email address. Requests from external email addresses will not be processed.</p>
         
         
         
         <el-divider></el-divider>
+        
     </div>
 </template>
 
@@ -112,33 +113,33 @@ import {getPaperMeta} from '@/request/paperApi'
 export default {
     props:{
         isEditMeta:false,
+        paperid:'',
     },
     data(){
         return{
-            courseNO:"EBU6304",
-            courseName:"Software Engineering",
-            courseDate:"2019/20",
-            examiners:"Dr Ling Ma, Dr Gokop Goteng, Dr Matthew Huntbach, Dr Luca Rossi",
-            fileName:"1920_EBU6304_ALT2020_A",
-            paperid:"",
+            courseNO:"",
+            courseName:"",
+            courseDate:"",
+            examiners:"",
+            fileName:"",
+            initMeta:false,
         }
     },
     mounted(){
-        this.getPaperMetaInfo()
+        this.paperid = this.$route.params.paperid;
+        this.getPaperMetaInfo(this.paperid)
     },
     methods:{
-        getPaperMetaInfo(){
-            var paperid="202102042018KiKi"
+        getPaperMetaInfo(paperid){
             getPaperMeta(paperid).then((res)=>{
                 var data = res.data[0];
-                this.paperid = data.paperid;
                 this.courseNO = data.courseNO;
                 this.courseName = data.courseName;
                 this.courseDate = data.courseDate;
                 this.examiners = data.examiners;
                 this.fileName = data.fileName;
             })
-        }
+        },
     }
 }
 </script>

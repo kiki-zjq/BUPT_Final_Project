@@ -5,14 +5,14 @@ const proxy='http://localhost:3000/papers'
 
 // 查询试卷的Meta信息
 export function getPaperMeta(paperid){
-    const url = proxy+'/'+paperid
+    const url = proxy+'/GetPaper/'+paperid
     return axios.get(url)
 }
 
 
 // 修改试卷的Meta信息
 export function modifyPaperMeta(paperid,data){
-    const url = proxy+'/'+paperid
+    const url = proxy+'/ModifyPaper/'+paperid
     return axios.post(url,data)
 }
 
@@ -30,7 +30,7 @@ export function initPaperMeta(account,data){
 // 剔除question中paperid为对应的所有题目
 export function deletePaper(paperid){
 
-    const paperUrl =  proxy+'/'+paperid;
+    const paperUrl =  proxy+'/paperRemove/'+paperid;
     const questionUrl = 'http://localhost:3000/questions/paperRemove/'+paperid;
     const accountUrl = 'http://localhost:3000/accounts/paperRemove/'+paperid;
     axios.delete(questionUrl);

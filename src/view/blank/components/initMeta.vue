@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="Edit Test Meta Information" :visible.sync="initMeta" >
+    <el-dialog title="Edit Test Meta Information" :visible.sync="initMeta" :before-close="handleClose">
         <el-form class="init-form" label-width="100px">
             <el-form-item label="Course NO" >
                     <el-input v-model="courseNO" resize="none" clearable style="width:50%" placeholder="EBU6304"></el-input>
@@ -59,8 +59,11 @@ export default {
                 modifyDate:this.formatDate(),
             }
             initPaperMeta(account,obj);
-            this.$emit("finishInitMeta");
+            this.$emit("finishInitMeta",1);
         },
+        handleClose(){
+            this.$emit("finishInitMeta",0);
+        }
     }
 }
 </script>

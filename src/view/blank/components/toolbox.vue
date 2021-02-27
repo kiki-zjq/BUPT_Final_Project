@@ -30,7 +30,7 @@ export default {
             this.$emit("editMeta")
         },
         saveMeta(){
-
+            this.$emit("saveMeta")
         },
         cancelMeta(){
             this.$confirm('We will NOT save your modification.', 'Prompt', {
@@ -38,9 +38,10 @@ export default {
                 cancelButtonText: 'No',
                 type: 'warning'
             }).then(() => {
-        
+                
                 //this.$refs.mainPart.cancelMeta();
                 this.isEditMeta = false;
+                this.$emit('cancelMeta')
             
             });
         },

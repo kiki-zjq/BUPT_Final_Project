@@ -18,11 +18,13 @@ const store = new Vuex.Store({
   state:{
       account:'',
       password:'',
+      name:'',
     },
   mutations:{
-        changeAccount(state,account,password){
+        changeAccount(state,account,password,name){
             state.account = account;
             state.password = password;
+            state.name = name;
         },
         changeIntro(state,intro){
             state.Intro= intro

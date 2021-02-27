@@ -30,7 +30,7 @@ export default {
                     type: 'success',
                     duration:5000,
                 });
-                this.$store.commit('changeAccount',this.account,this.pwd);
+                this.$store.commit('changeAccount',this.account,this.pwd,res.data[0].name);
                 this.$router.push('/Homepage');
             }).catch((res)=>{
                 this.$notify.error({

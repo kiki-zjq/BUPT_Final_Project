@@ -3,27 +3,36 @@
         <HeaderPart class="header-part"/>
         <el-row>
 
-            <el-col :span="4">
-                <ToolBox class="tool-box"/>
+            
 
-            </el-col>
+            <el-col :span="16" :offset="4">
+                
+                <!-- <MainPart ref="mainPart" :questions="questions"  :isEditMeta="isEditMeta" @del="del" @modify="modify"/> -->
+                <div class="main-part">
+                    <div class="doc">
+                        <Cover :isEditMeta="isEditMeta" :paperid="paperid" style="margin-bottom:4em;" ref="coverPage"/>
+                        <QuestionBlock
+                            v-for="(question,index) in questions"
+                            :key="index"
+                            :question="question"
+                            :ind="index+1"
 
-            <el-col :span="16">
-                
-                <MainPart ref="mainPart" :questions="questions"  :isEditMeta="isEditMeta" @del="del" @modify="modify"/>
-                
+                            @modify="modify"
+                            @del="del"
+                        />
+                        <!-- del和modify搞定 可以删除和修改问题 -->
+                        
+                        <el-divider></el-divider>
+                        <p style="text-align:center;font-family:Times New Roman">END OF PAPER</p>
+                    </div>
+                </div>
             </el-col>
             
             
             <el-col :span="4">
                 <div class="edit-box">
-                    <el-button type="primary" class="btn" @click="isEditMeta = true" v-if="!isEditMeta">EDIT META</el-button>
-                    <el-button type="success" class="editing-btn" @click="saveMeta()" v-if="isEditMeta" icon="el-icon-check"></el-button>
-                    <el-button type="danger"  class="editing-btn" @click="cancelMeta()" v-if="isEditMeta" icon="el-icon-close" ></el-button>
-                    <br/>
-                    <el-button type="primary" class="btn" @click="edit()">ADD</el-button><br/>
-                    <el-button type="success" class="btn" @click="addQuestion=true">PREVIEW</el-button><br/>
-                    <el-button type="warning" class="btn" @click="addQuestion=true">DOWNLOAD</el-button><br/>
+                    
+                    <ToolBox @addNewQuestion="addBlock=true" @editMeta="isEditMeta=true" @saveMeta="saveMeta" @cancelMeta="cancelMeta"/>
                 </div>
             </el-col>
                     
@@ -32,53 +41,9 @@
 
 
 
-
-        <el-dialog title="Add Question" :visible.sync="dialogFormVisible">
-            <el-form label-width="100px">
-                <el-form-item label="Question" >
-                    <el-input type="textarea"  :autosize="{ minRows: 2, maxRows: 6}" v-model="title" resize="none" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="Total Marks" >
-                    <el-col :span="2">
-                     <el-input v-model="total" 
-                                onkeyup="this.value=this.value.replace(/[^\d]/g,'') " 
-                                onafterpaste="this.value=this.value.replace(/[^\d]/g,'') "
-                    ></el-input>
-                    </el-col>
-                    <el-col :span="5">
-                        <span style="font-weight:bold;margin-left:1.5em;"> Marks </span>
-                    </el-col>
-                </el-form-item>
-                <el-divider></el-divider>
-                <div v-for="(sub,i) in subquestion" :key="i">
-                    <el-form-item label="Subquestion" >
-                        <el-input type="textarea" :placeholder=sub.question v-model="sub.question" :autosize="{ minRows: 2, maxRows: 6}"  resize="none" clearable></el-input>
-                    </el-form-item>
-                    <el-form-item label="Marks" >
-                        <el-col :span="2">
-                        <el-input :placeholder=sub.grade v-model="sub.grade"
-                                    onkeyup="this.value=this.value.replace(/[^\d]/g,'') " 
-                                    onafterpaste="this.value=this.value.replace(/[^\d]/g,'') "
-                        ></el-input>
-                        </el-col>
-                        <el-col :span="5">
-                            <span style="font-weight:bold;margin-left:1.5em;"> Marks </span>
-                        </el-col>
-                        <el-col :span="2" :offset="14"><el-button type="danger" size="small" icon="el-icon-delete" @click="delSub(i)" circle></el-button></el-col>
-                    </el-form-item>
-                    <el-divider></el-divider>
-                </div>
-            </el-form>
-            
-            <div slot="footer" class="dialog-footer">
-                <el-button type="success" @click="addSub()">Add Subquestion</el-button>
-                <el-button @click="cancel()">Cancel</el-button>
-                <el-button type="primary" @click="save()">Save</el-button>
-            </div>
-
-        </el-dialog> 
-
-
+        <AddQuestionBlock :addBlock="addBlock" @cancel="addBlock=false" @save="save" />
+        <!-- addquestionblock 全部处理完毕：可以加问题了 -->
+    
 
 
     </div>    
@@ -88,100 +53,52 @@
 <script>
 import HeaderPart from './components/head'
 import ToolBox from './components/toolbox'
-import MainPart from './components/mainPart'
+
+
+import AddQuestionBlock from './components/addQuestionBlock'
+import Cover from './components/coverPage'
+import QuestionBlock from './components/questionBlock'
+
 
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
+import {modifyPaperMeta} from '@/request/paperApi'
+import {dateMixin} from '@/mixins/DateMixin.js';
+
 export default {
+    mixins:[dateMixin],
+    components:{
+        HeaderPart,
+        ToolBox,
+
+        AddQuestionBlock,
+        Cover,
+        QuestionBlock
+    },
     data(){
         return{
             questions:[],
-            addQuestion:false,
-            dialogFormVisible:false,
-            title:'',
-            total:'',   
-            subquestion:[],
+
+            addBlock:false,
+
             isEditMeta:false,
+            
+            paperid:'',
         };
     },
     methods:{
-        edit(){
-            this.dialogFormVisible = true;
+        getData(){
+            fetchQuestion(this.paperid).then((res)=>{
+                this.questions = res.data
+            })
         },
-        delSub(i){
-            this.$confirm('Are you sure you want to delete this subquestion?', '', {
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'No',
-            type:'warning'
-            }).then(()=>{
-                this.$message({
-                type: 'success',
-                message: `Delete Successfully`
-                });
-                this.subquestion.splice(i,1)
-            }).catch(()=>{
-                this.$message({
-                type: 'info',
-                message: `Cancel Delete Action`
-                });
-            })            
-        },
+
+        
         del(qid){
             deleteQuestion(qid)
             this.getData()
         },
-        addSub(){
-            var Obj = {
-                question:'',
-                grade:0,
-            }
-            this.subquestion.push(Obj)
-        },
-        cancel(){
-            this.dialogFormVisible = false;
-            this.title='';
-            this.total='';
-            this.subquestion=[];
-        },
-        save(){
-            if(this.check()){
-                this.dialogFormVisible = false;
-                var n = this.questions.length;
-                var qid = this.questions[n-1].qid+1;
-
-                var data={
-                    "title":this.title,
-                    "total":this.total,
-                    "subquestion":this.subquestion,
-                    "qid":qid
-                };
-                
-                this.$notify({
-                        title: 'Success',
-                        message: 'Add a new question successfully!',
-                        type: 'success',
-                        duration:5000,
-                    });
-
-                addQuestion(data).then(()=>{
-                    this.getData();
-                    this.title='';
-                    this.total='';
-                    this.subquestion=[];
-                    
-                })
-            }else{
-                this.$notify({
-                    title: 'Warning',
-                    message: 'Make sure that the sum of subquestion score is equal to the total score!',
-                    type: 'warning',
-                    duration:5000,
-                });
-            }
-            
-
-
-        },
+        
         modify(data,qid){
             modifyQuestion(data,qid).then(()=>{
                 this.getData();
@@ -195,59 +112,80 @@ export default {
             });
             
         },
-        getData(){
-            console.log(this.$route.params.paperid)
-            fetchQuestion().then((res)=>{
-                this.questions = res.data
-            })
-        },
-        check(){
-            var sum = 0;
-            if(!this.subquestion.length)return true;
+
+
+        
+        save(data){
+                
+                this.addBlock = false;
+                // var n = this.questions.length;
+                // var qid = n==0?1:this.questions[n-1].qid+1;
+
+                // data.qid = qid;
+                data.qid = Date.parse( new Date());
+                data.paperid = this.paperid;
+                
+                this.$notify({
+                        title: 'Success',
+                        message: 'Add a new question successfully!',
+                        type: 'success',
+                        duration:5000,
+                    });
+
+                addQuestion(data).then(()=>{
+                    this.getData();
+                })
             
-            this.subquestion.forEach((sub)=>{
-                sum += Number(sub.grade)
-            })
-            if(this.total == sum)return true;
-            else return false;
+            
+
+
         },
+
+
+
+
+        
         saveMeta(){
             this.$confirm('Are you sure you want to save your changes?', 'Prompt', {
                 confirmButtonText: 'Yes',
                 cancelButtonText: 'No',
                 type: 'warning'
             }).then(() => {
-        
-                this.$refs.mainPart.saveMeta();
+                
+                var obj = {
+                    courseNO:this.$refs.coverPage.courseNO,
+                    courseName:this.$refs.coverPage.courseName,
+                    courseDate:this.$refs.coverPage.courseDate,
+                    examiners:this.$refs.coverPage.examiners,
+                    fileName:this.$refs.coverPage.fileName
+                }
+                modifyPaperMeta(this.paperid, obj).then(()=>{
+                    this.$notify({
+                            title: 'Success',
+                            message: 'Save Meta Information Successfully!',
+                            type: 'success',
+                            duration:3000,
+                        });
+                })
                 this.isEditMeta = false;
                 
             });
             
         },
         cancelMeta(){
-            
-            this.$confirm('We will NOT save your modification.', 'Prompt', {
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-                type: 'warning'
-            }).then(() => {
-        
-                this.$refs.mainPart.cancelMeta();
-                this.isEditMeta = false;
-            
-            });
-            
-            
-        }
+            this.$refs.coverPage.getPaperMetaInfo(this.paperid);
+            this.isEditMeta = false;
+        },
     },
+
+
     mounted(){
+        var account = this.$store.state.account
+
+        this.paperid = this.$route.params.paperid;
         this.getData();
     },
-    components:{
-        HeaderPart,
-        ToolBox,
-        MainPart,
-    }
+
 }
 </script>
 
@@ -262,21 +200,31 @@ export default {
     top:100px;
 }
 .blank{
-    /* background-color: #dadce0; */
-    background-image:linear-gradient(to top right,#2C5364,#203A43,#0F2027);
+    background-color: #dadce0;
 }
-.btn{
-    margin-top:20px;
-    width:120px;
-    height:60px;
-}
-.editing-btn{
-    width:50px;
-    padding-left:16px;
-}
+
 .edit-box{
     position: fixed;
     bottom: 40px;
     right:60px;
+}
+
+.main-part{
+    position: relative;
+    background-color: #dadce0;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: left;
+}
+
+.doc{
+    box-shadow: black 0px 0px 10px;
+    background-color:white;
+    margin:0 auto;
+    box-sizing: border-box;
+    padding:30px;
+    width:90%;
+    min-height:800px;
 }
 </style>
