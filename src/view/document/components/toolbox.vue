@@ -1,5 +1,6 @@
 <template>
     <div class="toolbox">
+            <el-button type="success" class="btn" @click="addTeam()">ADD TEAM</el-button><br/>
             <el-button type="primary" class="btn" @click="handleEdit()" v-if="!isEditMeta">EDIT META</el-button>
             <el-button type="success" class="editing-btn" @click="saveMeta()" v-if="isEditMeta" icon="el-icon-check"></el-button>
             <el-button type="danger"  class="editing-btn" @click="cancelMeta()" v-if="isEditMeta" icon="el-icon-close" ></el-button>
@@ -48,6 +49,9 @@ export default {
         addNewQuestion(){
             this.$emit("addNewQuestion")
         },
+        addTeam(){
+            this.$emit('addTeam')
+        }
     }
 }
 </script>

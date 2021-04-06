@@ -20,3 +20,9 @@ export function checkAccount(account,pwd){
     const url = proxy + '/checkAccount/'+account+'/'+pwd;
     return axios.get(url)
 }
+
+// 邀请新成员的时候使用
+export function inviteTeam(account,paperid){
+    const url = proxy + '/inviteTeam/'+account+'/'+paperid;
+    return axios.get(url)
+}

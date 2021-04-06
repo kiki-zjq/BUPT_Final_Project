@@ -149,6 +149,40 @@ accountRouter.route('/paperRemove/:paperid')
 
 })
 
+
+
+// 邀请该成员进入新的team
+accountRouter.route('/inviteTeam/:account/:paperid')
+.get((req,res,next)=>{
+    Account.find({"account":req.params.account})
+    .then((account) => {
+        if(account.length==0){
+            res.statusCode = 403;
+            res.end('This account does not exist!');
+        }else{
+            if(account[0].paper.indexOf(req.params.paperid)==-1){
+                Account.update(
+                    {account:account[0].account},
+                    {$push:{paper:req.params.paperid}}
+                ).then(()=>{
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(account);
+                })
+            }else{
+                res.statusCode = 403;
+                res.end('Already invite!');
+            }
+                
+
+
+            
+        }
+    }, (err) => next(err))
+    .catch((err) => next(err));
+})
+
+
 // 登陆的时候检查账号信息
 accountRouter.route('/checkAccount/:account/:password')
 .get((req,res,next)=>{

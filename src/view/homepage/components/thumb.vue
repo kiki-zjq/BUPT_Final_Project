@@ -10,7 +10,8 @@
         
         <div class="thumb-tool">
             <el-tooltip class="item" effect="dark" :content="fileName" placement="top-start">
-                <span>{{displayFileName}}</span>
+                <span v-if="!isRename">{{displayFileName}}</span>
+                <!-- <el-input v-if="isRename" ></el-input> -->
             </el-tooltip>
     
 
@@ -22,7 +23,7 @@
             placement="bottom"
             width="120"
             trigger="click">
-                <div class="thumb-tool-btn"><i class="el-icon-edit-outline"></i> Rename</div>
+                <div class="thumb-tool-btn" @click="rename()"><i class="el-icon-edit-outline"></i> Rename</div>
                 <div class="thumb-tool-btn" @click="removePaper()"><i class="el-icon-delete"></i> Delete</div>
                 <div class="thumb-tool-btn"><i class="el-icon-data-board"></i><a :href="docURL" target="_blank"> Open in new tab</a></div>
 
@@ -47,7 +48,8 @@ export default {
         return{
             fileName:'',
             modifyDate:'',
-            docURL:'http://localhost:8081/#/Document/'
+            docURL:'http://localhost:8081/#/Document/',
+            isRename:false,
         }
     },
     methods:{
@@ -63,6 +65,9 @@ export default {
             this.$emit("remove", this.paperid)
         },
         openDoc(){
+
+        },
+        rename(){
 
         }
     },

@@ -2,8 +2,12 @@
     <div class='blank'>
         <HeaderPart class="header-part"/>
         <el-row>
-
-            
+<!-- 
+            <el-col :span="4">
+                <div class="tool-box">
+                    <AddTeamBtn/>
+                </div>
+            </el-col> -->
 
             <el-col :span="16" :offset="4">
                 
@@ -32,7 +36,11 @@
             <el-col :span="4">
                 <div class="edit-box">
                     
-                    <ToolBox @addNewQuestion="addBlock=true" @editMeta="isEditMeta=true" @saveMeta="saveMeta" @cancelMeta="cancelMeta"/>
+                    <ToolBox @addNewQuestion="addBlock=true" 
+                             @editMeta="isEditMeta=true" 
+                             @saveMeta="saveMeta" 
+                             @cancelMeta="cancelMeta"
+                             @addTeam="teamBlock=true"/>
                 </div>
             </el-col>
                     
@@ -40,7 +48,7 @@
         </el-row>
 
 
-
+        <TeamBlock :teamBlock="teamBlock" @cancel="teamBlock=false"/>
         <AddQuestionBlock :addBlock="addBlock" @cancel="addBlock=false" @save="save" />
         <!-- addquestionblock 全部处理完毕：可以加问题了 -->
     
@@ -54,7 +62,7 @@
 import HeaderPart from './components/head'
 import ToolBox from './components/toolbox'
 
-
+import TeamBlock from './components/teamBlock'
 import AddQuestionBlock from './components/addQuestionBlock'
 import Cover from './components/coverPage'
 import QuestionBlock from './components/questionBlock'
@@ -71,6 +79,7 @@ export default {
         HeaderPart,
         ToolBox,
 
+        TeamBlock,
         AddQuestionBlock,
         Cover,
         QuestionBlock
@@ -80,6 +89,7 @@ export default {
             questions:[],
 
             addBlock:false,
+            teamBlock:false,
 
             isEditMeta:false,
             
@@ -176,6 +186,7 @@ export default {
             this.$refs.coverPage.getPaperMetaInfo(this.paperid);
             this.isEditMeta = false;
         },
+
     },
 
 

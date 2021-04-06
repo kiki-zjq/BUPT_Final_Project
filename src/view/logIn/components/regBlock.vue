@@ -43,6 +43,7 @@ export default {
                     type: 'success',
                     duration:5000,
                 });
+                this.$emit("goLogin")
             }).catch((res)=>{
                 this.$notify.error({
                     title: 'Error',
