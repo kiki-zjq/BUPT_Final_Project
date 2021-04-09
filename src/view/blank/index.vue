@@ -32,7 +32,11 @@
             <el-col :span="4">
                 <div class="edit-box">
                     
-                    <ToolBox @addNewQuestion="addBlock=true" @editMeta="isEditMeta=true" @saveMeta="saveMeta" @cancelMeta="cancelMeta"/>
+                    <ToolBox @addNewQuestion="addBlock=true" 
+                             @editMeta="isEditMeta=true" 
+                             @saveMeta="saveMeta" 
+                             @cancelMeta="cancelMeta"
+                             @addTeam="teamBlock=true"/>
                 </div>
             </el-col>
                     
@@ -40,7 +44,7 @@
         </el-row>
 
 
-
+        <TeamBlock :teamBlock="teamBlock" @cancel="teamBlock=false"/>
         <AddQuestionBlock :addBlock="addBlock" @cancel="addBlock=false" @save="save" />
         <!-- addquestionblock 全部处理完毕：可以加问题了 -->
         <InitMeta :initMeta="openInitMeta" :paperid="paperid" @finishInitMeta="finishInit"/>
@@ -57,7 +61,7 @@ import InitMeta from './components/initMeta'
 import AddQuestionBlock from './components/addQuestionBlock'
 import Cover from './components/coverPage'
 import QuestionBlock from './components/questionBlock'
-
+import TeamBlock from './components/teamBlock'
 
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
@@ -70,6 +74,8 @@ export default {
         HeaderPart,
         ToolBox,
         InitMeta,
+
+        TeamBlock,
         AddQuestionBlock,
         Cover,
         QuestionBlock
@@ -79,7 +85,7 @@ export default {
             questions:[],
 
             addBlock:false,
-
+            teamBlock:false,
             isEditMeta:false,
             
             initMeta:1,

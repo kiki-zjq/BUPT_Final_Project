@@ -8,7 +8,20 @@
             v-for="(sub,i) in question.subquestion"
             :key="i">
             <p>({{i+1}}) {{sub.question}}</p>
-            <p class="question-grade">({{sub.grade}} marks)</p>            
+            <p class="question-grade">({{sub.grade}} marks)</p>
+            
+            <div v-if="sub.criteria.length!=0" class="criteria-block">
+                <span style="font-weight:bold;margin-left:-2em;">Criteria:</span>
+                <ul>
+                <li v-for="(cri,index) in sub.criteria" :key="index">
+                    <span>{{sub.criteria[index].point}}</span>
+                    <span style="font-weight:bold">... ...</span>
+                    <span>{{sub.criteria[index].mark}} marks</span>
+
+                </li>
+                </ul>
+            </div>       
+        
         </div>
 
         <div class="tool-box">
@@ -114,8 +127,36 @@
                         <el-col :span="5">
                             <span style="font-weight:bold;margin-left:1.5em;"> Marks </span>
                         </el-col>
-                        <el-col :span="2" :offset="14"><el-button type="danger" size="small" icon="el-icon-delete" @click="delSub(i)" circle></el-button></el-col>
+                        <el-col :span="2" :offset="12"><el-button type="success" size="small" icon="el-icon-plus" @click="addCriteria(i)" circle></el-button></el-col>
+                        
+                        <el-col :span="2" ><el-button type="danger" size="small" icon="el-icon-delete" @click="delSub(i)" circle></el-button></el-col>
                     </el-form-item>
+
+
+                    <el-form-item label="Criteria" v-if="sub.criteria.length!=0">
+                        <el-row v-for="(cri,index) in sub.criteria" :key="index" style="margin-bottom:1em">
+                            <el-col :span="12">
+                                <el-input v-model="cri.point"></el-input>
+                            </el-col>
+                            <el-col :span="2" :offset="2">
+                                <el-input  v-model="cri.mark"
+                                    onkeyup="this.value=this.value.replace(/[^\d]/g,'') " 
+                                    onafterpaste="this.value=this.value.replace(/[^\d]/g,'') "
+                                ></el-input>
+                            </el-col>
+                
+                            <el-col :span="3">
+                                <span style="font-weight:bold;margin-left:1.5em;"> Marks </span>
+                            </el-col>
+
+                            <el-col :span="2" :offset="2">
+                                <i style="font-weight:bold; color:red; cursor:pointer" class="el-icon-close" @click="delCri(i,index)"></i>
+                            </el-col>
+
+                        </el-row>
+                    </el-form-item>
+
+
                     <el-divider></el-divider>
                 </div>
             </el-form>
@@ -203,12 +244,38 @@ export default {
                 });
             })            
         },
+        delCri(i,index){
+            this.$confirm('Are you sure you want to delete this criteria?', '', {
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            type:'warning'
+            }).then(()=>{
+                this.$message({
+                type: 'success',
+                message: `Delete Successfully`
+                });
+                this.editSub[i].criteria.splice(index,1)
+            }).catch(()=>{
+                this.$message({
+                type: 'info',
+                message: `Cancel Delete Action`
+                });
+            })            
+        },
         addSub(){
             var Obj = {
                 question:'',
                 grade:0,
+                criteria:[],
             }
             this.editSub.push(Obj)
+        },
+        addCriteria(i){
+            var Obj = {
+                point:'',
+                mark:0,
+            }
+            this.editSub[i].criteria.push(Obj);
         },
         modify(){
 
@@ -341,6 +408,20 @@ $(document).ready(function(){
     background-color: #67C23A;
     padding: 10px 2em 0 10px;
 }
+
+.criteria-block{
+    border-radius: 5px;
+    padding:10px;
+    margin:5px auto;
+    width:90%;
+    background-color:rgba(251, 140, 99, 0.68);
+    font-size:14px;
+    font-weight:bold;
+}
+.criteria-block li{
+    text-indent: 0;
+}
+
 
 .el-drawer__body {
     /* overflow: auto; */

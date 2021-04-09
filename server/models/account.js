@@ -19,7 +19,6 @@ const accountSchema = new Schema({
         type: Array,
         required: true
     }
-
     
 },  {
     collection:'userInfo'

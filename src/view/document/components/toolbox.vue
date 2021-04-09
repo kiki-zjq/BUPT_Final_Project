@@ -7,7 +7,7 @@
             <br/>
             <el-button type="primary" class="btn" @click="addNewQuestion()">ADD</el-button><br/>
             <el-button type="success" class="btn" @click="addQuestion=true">PREVIEW</el-button><br/>
-            <el-button type="warning" class="btn" @click="addQuestion=true">DOWNLOAD</el-button><br/>
+            <el-button type="danger" class="btn" @click="download()">DOWNLOAD</el-button><br/>
     </div>
 </template>
 
@@ -22,8 +22,10 @@ export default {
             title:'',
             total:'',   
             subquestion:[],
-            isEditMeta:false,
         };
+    },
+    props:{
+        isEditMeta:false,
     },
     methods:{
         handleEdit(){
@@ -51,6 +53,9 @@ export default {
         },
         addTeam(){
             this.$emit('addTeam')
+        },
+        download(){
+            this.$emit('download')
         }
     }
 }
@@ -71,6 +76,7 @@ export default {
     height:60px;
 }
 .editing-btn{
+    margin-top:20px;
     width:50px;
     padding-left:16px;
 }

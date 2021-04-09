@@ -40,14 +40,16 @@
                              @editMeta="isEditMeta=true" 
                              @saveMeta="saveMeta" 
                              @cancelMeta="cancelMeta"
-                             @addTeam="teamBlock=true"/>
+                             @addTeam="teamBlock=true"
+                             @download="downloadBlock=true"
+                             :isEditMeta="isEditMeta"/>
                 </div>
             </el-col>
                     
 
         </el-row>
 
-
+        <DownloadBlock :downloadBlock="downloadBlock" @cancel="downloadBlock=false" @download="download"/>
         <TeamBlock :teamBlock="teamBlock" @cancel="teamBlock=false"/>
         <AddQuestionBlock :addBlock="addBlock" @cancel="addBlock=false" @save="save" />
         <!-- addquestionblock 全部处理完毕：可以加问题了 -->
@@ -66,11 +68,14 @@ import TeamBlock from './components/teamBlock'
 import AddQuestionBlock from './components/addQuestionBlock'
 import Cover from './components/coverPage'
 import QuestionBlock from './components/questionBlock'
-
+import DownloadBlock from './components/downloadBlock'
 
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
 import {modifyPaperMeta} from '@/request/paperApi'
+import {downloadPaper} from '@/request/downloadApi'
+
+
 import {dateMixin} from '@/mixins/DateMixin.js';
 
 export default {
@@ -79,6 +84,7 @@ export default {
         HeaderPart,
         ToolBox,
 
+        DownloadBlock,
         TeamBlock,
         AddQuestionBlock,
         Cover,
@@ -90,6 +96,7 @@ export default {
 
             addBlock:false,
             teamBlock:false,
+            downloadBlock:false,
 
             isEditMeta:false,
             
@@ -186,6 +193,36 @@ export default {
             this.$refs.coverPage.getPaperMetaInfo(this.paperid);
             this.isEditMeta = false;
         },
+
+        download(format, type){
+
+            let obj={
+                courseNo:this.$refs.coverPage.courseNO,
+                courseName:this.$refs.coverPage.courseName,
+                courseDate:this.$refs.coverPage.courseDate,
+                examiners:this.$refs.coverPage.examiners,
+                fileName:this.$refs.coverPage.fileName,
+                questions:this.questions
+            }
+            console.log(obj);
+
+            downloadPaper(obj, format, type).then(()=>{
+                var a = document.createElement("a")
+                document.body.appendChild(a);
+                a.setAttribute('href','./static/'+obj.fileName+'.pdf');
+                a.setAttribute('download',obj.fileName+'.pdf');
+                a.click();
+
+                a.setAttribute('href','./static/'+obj.fileName+'.tex');
+                a.setAttribute('download',obj.fileName+'.tex');
+                a.click();
+                
+                document.body.removeChild(a);
+  
+                this.downloadBlock = false;
+            })
+            
+        }
 
     },
 
