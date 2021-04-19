@@ -1,5 +1,5 @@
 <template>
-    <div class="thumb-block">
+    <div class="thumb-block" @mouseenter="showInfo()">
 
         <div class="thumb-pic">
 
@@ -46,6 +46,7 @@ export default {
     },
     data(){
         return{
+            info:{},
             fileName:'',
             modifyDate:'',
             docURL:'http://localhost:8081/#/Document/',
@@ -56,6 +57,7 @@ export default {
         getRecentPaperInfo(){
             getPaperMeta(this.paperid).then((res)=>{
                 var data = res.data[0];
+                this.info = data;
                 this.fileName = data.fileName;
                 this.modifyDate = data.modifyDate;
                 this.docURL = this.docURL + data.paperid
@@ -63,6 +65,9 @@ export default {
         },
         removePaper(){
             this.$emit("remove", this.paperid)
+        },
+        showInfo(){
+            this.$emit("showInfo", this.info);
         },
         openDoc(){
 

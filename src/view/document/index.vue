@@ -204,18 +204,26 @@ export default {
                 fileName:this.$refs.coverPage.fileName,
                 questions:this.questions
             }
-            console.log(obj);
+            // console.log(obj);
 
             downloadPaper(obj, format, type).then(()=>{
                 var a = document.createElement("a")
                 document.body.appendChild(a);
-                a.setAttribute('href','./static/'+obj.fileName+'.pdf');
-                a.setAttribute('download',obj.fileName+'.pdf');
-                a.click();
 
-                a.setAttribute('href','./static/'+obj.fileName+'.tex');
-                a.setAttribute('download',obj.fileName+'.tex');
-                a.click();
+                if(format == '1' || format == '3'){
+                    a.setAttribute('href','./static/'+obj.fileName+'.pdf');
+                    a.setAttribute('download',obj.fileName+'.pdf');
+                    a.click();
+                }
+                
+                if(format == '2' || format == '3'){
+                    a.setAttribute('href','./static/'+obj.fileName+'.tex');
+                    a.setAttribute('download',obj.fileName+'.tex');
+                    a.click();
+                }
+
+                // 这里未来加一个动画或者提示，让用户知道我们正在download
+
                 
                 document.body.removeChild(a);
   
@@ -232,6 +240,10 @@ export default {
 
         this.paperid = this.$route.params.paperid;
         this.getData();
+        setInterval(()=>{
+            console.log('interval')
+            this.getData()
+        },10000);
     },
 
 }

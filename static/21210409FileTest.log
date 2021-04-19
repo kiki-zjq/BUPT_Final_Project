@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 21.1) (preloaded format=pdflatex 2021.3.24)  9 APR 2021 19:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 21.1) (preloaded format=pdflatex 2021.3.24)  19 APR 2021 19:14
 entering extended mode
 **../static/21210409FileTest.tex
 (../static/21210409FileTest.tex
@@ -116,7 +116,7 @@ File: l3backend-pdftex.def 2021-01-09 L3 backend support: PDF output (pdfTeX)
 \l__kernel_color_stack_int=\count189
 \l__pdf_internal_box=\box47
 )
-No file 21210409FileTest.aux.
+(e:\Final_Project\BUPT_Final_Project\static\21210409FileTest.aux)
 \openout1 = `21210409FileTest.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
@@ -134,6 +134,7 @@ LaTeX Font Info:    ... okay on input line 20.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
 Package ragged2e Info: ABD: executing \RaggedRight on input line 20.
+
 ABD: EverySelectfont initializing macros
 LaTeX Info: Redefining \selectfont on input line 20.
 Package lastpage Info: Please have a look at the pageslts package at
@@ -271,9 +272,6 @@ Overfull \hbox (3.10312pt too wide) in paragraph at lines 55--55
 
 
 
-Package lastpage Warning: Rerun to get the references right on input line 162.
-
-
 AED: lastpage setting LastPage
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -283,33 +281,24 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-2.0pt}.
 
-
-LaTeX Warning: Reference `unknown' on page 1 undefined on input line 162.
-
 [1
 
-] (e:\Final_Project\BUPT_Final_Project\static\21210409FileTest.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] (e:\Final_Project\BUPT_Final_Project\static\21210409FileTest.aux) ) 
 Here is how much of TeX's memory you used:
- 1926 strings out of 479618
- 28744 string characters out of 2882003
- 316442 words of memory out of 3000000
+ 1928 strings out of 479618
+ 28870 string characters out of 2882003
+ 316452 words of memory out of 3000000
  19116 multiletter control sequences out of 15000+200000
  408610 words of font info for 44 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,12n,74p,308b,312s stack positions out of 5000i,500n,10000p,200000b,50000s
-<E:/LATEX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><E:/LATEX/fonts/type1/pub
-lic/amsfonts/cm/cmbx12.pfb><E:/LATEX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><
-E:/LATEX/fonts/type1/public/amsfonts/cm/cmr10.pfb><E:/LATEX/fonts/type1/public/
-amsfonts/cm/cmr12.pfb>
+ 68i,12n,74p,308b,281s stack positions out of 5000i,500n,10000p,200000b,50000s
+<E:/LATEX/
+fonts/type1/public/amsfonts/cm/cmbx10.pfb><E:/LATEX/fonts/type1/public/amsfonts
+/cm/cmbx12.pfb><E:/LATEX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><E:/LATEX/fon
+ts/type1/public/amsfonts/cm/cmr10.pfb><E:/LATEX/fonts/type1/public/amsfonts/cm/
+cmr12.pfb>
 Output written on e:\Final_Project\BUPT_Final_Project\static\21210409FileTest.p
-df (3 pages, 85049 bytes).
+df (3 pages, 85155 bytes).
 PDF statistics:
  32 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
