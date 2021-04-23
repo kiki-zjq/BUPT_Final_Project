@@ -62,8 +62,15 @@ export default {
             }
         },
         cancel(){
-            this.account='';
-            this.$emit('cancel');
+            this.$confirm('We will not save your input if you leave!', 'Prompt',{
+                 confirmButtonText: 'Leave',
+                cancelButtonText: 'Stay Here',
+                type: 'warning'
+            }).then(()=>{
+                this.account='';
+                this.$emit('cancel');
+            })
+            
         }
     }
 }

@@ -1,10 +1,8 @@
 <template>
     <div class="thumb-block" @mouseenter="showInfo()">
 
-        <div class="thumb-pic">
-
-
-
+        <div class="thumb-pic"  @click="openDoc()">
+            <i class="el-icon-zoom-in"></i>
         </div>
         
         
@@ -22,10 +20,11 @@
             <el-popover
             placement="bottom"
             width="120"
-            trigger="click">
+            trigger="click"
+            v-model="visible">
                 <div class="thumb-tool-btn" @click="rename()"><i class="el-icon-edit-outline"></i> Rename</div>
                 <div class="thumb-tool-btn" @click="removePaper()"><i class="el-icon-delete"></i> Delete</div>
-                <div class="thumb-tool-btn"><i class="el-icon-data-board"></i><a :href="docURL" target="_blank"> Open in new tab</a></div>
+                <div class="thumb-tool-btn" @click="visible = !visible"><i class="el-icon-data-board"></i><a :href="docURL" target="_blank"> Open in new tab</a></div>
 
             <i slot="reference" class="el-icon-more"></i>
             </el-popover>
@@ -46,6 +45,7 @@ export default {
     },
     data(){
         return{
+            visible:false,
             info:{},
             fileName:'',
             modifyDate:'',
@@ -60,7 +60,7 @@ export default {
                 this.info = data;
                 this.fileName = data.fileName;
                 this.modifyDate = data.modifyDate;
-                this.docURL = this.docURL + data.paperid
+                this.docURL = this.docURL + this.$route.params.account +'/' + data.paperid
             })
         },
         removePaper(){
@@ -70,11 +70,12 @@ export default {
             this.$emit("showInfo", this.info);
         },
         openDoc(){
-
+            let url = '/Document/'+this.$route.params.account +'/'+this.info.paperid
+            this.$router.push(url);
         },
         rename(){
 
-        }
+        },
     },
     mounted(){
 
@@ -111,6 +112,14 @@ export default {
 
 .thumb-pic{
     height:240px;
+    cursor: pointer;
+    display: flex;
+    opacity: 0;
+    transition: opacity 1.5s;
+}
+
+.thumb-pic:hover{
+    opacity:0.7 ; 
 }
 
 .thumb-tool{
@@ -129,6 +138,10 @@ export default {
     float:right;
     transform: rotate(90deg);
     cursor: pointer;
+}
+.el-icon-zoom-in{
+    font-size:48px;
+    margin:auto;
 }
 
 .thumb-tool-btn{

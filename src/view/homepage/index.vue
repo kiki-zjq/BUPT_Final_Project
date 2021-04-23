@@ -44,7 +44,8 @@ export default {
     },
     methods:{
         getPaper(){
-            var account = this.$store.state.account;
+            let account = window.atob(this.$route.params.account);
+
             getAccountPaper(account).then((res)=>{
                 var data = res.data[0];
                 this.recent = data.paper;

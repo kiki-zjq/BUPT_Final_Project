@@ -24,12 +24,11 @@
 
 import QuestionBlock from './questionBlock'
 import Cover from './coverPage'
-
-
 import {modifyPaperMeta} from '@/request/paperApi'
-
+import {dateMixin} from '@/mixins/DateMixin.js';
 
 export default {
+    mixins:[dateMixin],
     props:{
         questions:[],
         isEditMeta:false,
@@ -53,7 +52,8 @@ export default {
                 courseName:this.$refs.coverPage.courseName,
                 courseDate:this.$refs.coverPage.courseDate,
                 examiners:this.$refs.coverPage.examiners,
-                fileName:this.$refs.coverPage.fileName
+                fileName:this.$refs.coverPage.fileName,
+                modifyDate:this.formatDate()
             }
             modifyPaperMeta(this.$refs.coverPage.paperid, obj).then(()=>{
                 this.$notify({

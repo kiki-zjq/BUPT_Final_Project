@@ -6,7 +6,7 @@
             <el-button type="danger"  class="editing-btn" @click="cancelMeta()" v-if="isEditMeta" icon="el-icon-close" ></el-button>
             <br/>
             <el-button type="primary" class="btn" @click="addNewQuestion()">ADD</el-button><br/>
-            <el-button type="success" class="btn" @click="addQuestion=true">PREVIEW</el-button><br/>
+            <el-button type="success" class="btn" @click="openQuestionBank()">MY BANK</el-button><br/>
             <el-button type="danger" class="btn" @click="download()">DOWNLOAD</el-button><br/>
     </div>
 </template>
@@ -56,6 +56,9 @@ export default {
         },
         download(){
             this.$emit('download')
+        },
+        openQuestionBank(){
+            this.$emit('openBank')
         }
     }
 }

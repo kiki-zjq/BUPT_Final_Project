@@ -49,7 +49,9 @@ export default {
     methods:{
         create(val){
             switch(val){
-                case 0:this.$router.push('/Blank');
+                case 0:
+                    let url = '/Blank/' + this.$route.params.account
+                    this.$router.push(url);
             }
         }
     }

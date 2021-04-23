@@ -66,7 +66,8 @@ paperRouter.route('/ModifyPaper/:paperid')
                 courseName:req.body.courseName,
                 courseDate:req.body.courseDate,
                 examiners:req.body.examiners,
-                fileName:req.body.fileName
+                fileName:req.body.fileName,
+                modifyDate:req.body.modifyDate
             }
         }
     )

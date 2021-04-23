@@ -2,16 +2,7 @@
     <div class='blank'>
         <HeaderPart class="header-part"/>
         <el-row>
-<!-- 
-            <el-col :span="4">
-                <div class="tool-box">
-                    <AddTeamBtn/>
-                </div>
-            </el-col> -->
-
             <el-col :span="16" :offset="4">
-                
-                <!-- <MainPart ref="mainPart" :questions="questions"  :isEditMeta="isEditMeta" @del="del" @modify="modify"/> -->
                 <div class="main-part">
                     <div class="doc">
                         <Cover :isEditMeta="isEditMeta" :paperid="paperid" style="margin-bottom:4em;" ref="coverPage"/>
@@ -20,41 +11,41 @@
                             :key="index"
                             :question="question"
                             :ind="index+1"
-
                             @modify="modify"
                             @del="del"
                         />
-                        <!-- del和modify搞定 可以删除和修改问题 -->
-                        
                         <el-divider></el-divider>
                         <p style="text-align:center;font-family:Times New Roman">END OF PAPER</p>
                     </div>
                 </div>
             </el-col>
             
-            
             <el-col :span="4">
-                <div class="edit-box">
-                    
+                <div class="edit-box">        
                     <ToolBox @addNewQuestion="addBlock=true" 
                              @editMeta="isEditMeta=true" 
                              @saveMeta="saveMeta" 
                              @cancelMeta="cancelMeta"
                              @addTeam="teamBlock=true"
                              @download="downloadBlock=true"
+                             @openBank="bankBlock=true"
                              :isEditMeta="isEditMeta"/>
                 </div>
             </el-col>
-                    
-
         </el-row>
 
         <DownloadBlock :downloadBlock="downloadBlock" @cancel="downloadBlock=false" @download="download"/>
         <TeamBlock :teamBlock="teamBlock" @cancel="teamBlock=false"/>
         <AddQuestionBlock :addBlock="addBlock" @cancel="addBlock=false" @save="save" />
-        <!-- addquestionblock 全部处理完毕：可以加问题了 -->
-    
 
+        <el-drawer
+            title="Question Bank"
+            @open="openQuestionBank"
+            :visible.sync="bankBlock"
+            direction="ltr"
+            size="50%">
+            <BankBlock @addFromBank='addFromBank' ref="questionBank"/>
+        </el-drawer> 
 
     </div>    
 </template>
@@ -69,7 +60,7 @@ import AddQuestionBlock from './components/addQuestionBlock'
 import Cover from './components/coverPage'
 import QuestionBlock from './components/questionBlock'
 import DownloadBlock from './components/downloadBlock'
-
+import BankBlock from './components/bankBlock'
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
 import {modifyPaperMeta} from '@/request/paperApi'
@@ -88,7 +79,8 @@ export default {
         TeamBlock,
         AddQuestionBlock,
         Cover,
-        QuestionBlock
+        QuestionBlock,
+        BankBlock
     },
     data(){
         return{
@@ -97,13 +89,14 @@ export default {
             addBlock:false,
             teamBlock:false,
             downloadBlock:false,
-
+            bankBlock:false,
             isEditMeta:false,
             
             paperid:'',
         };
     },
     methods:{
+
         getData(){
             fetchQuestion(this.paperid).then((res)=>{
                 this.questions = res.data
@@ -158,7 +151,27 @@ export default {
 
         },
 
+        openQuestionBank(){
+            this.$refs.questionBank.getBank();
+        },
 
+        addFromBank(data){
+            let obj = JSON.parse(JSON.stringify(data))
+            obj.qid = Date.parse( new Date());
+            obj.paperid = this.paperid;
+            obj.comment = [];
+            delete obj._id;
+
+            this.$notify({
+                        title: 'Success',
+                        message: 'Add a new question successfully!',
+                        type: 'success',
+                        duration:5000,
+            });
+            addQuestion(obj).then(()=>{
+                    this.getData();
+                })
+        },
 
 
         
@@ -174,7 +187,8 @@ export default {
                     courseName:this.$refs.coverPage.courseName,
                     courseDate:this.$refs.coverPage.courseDate,
                     examiners:this.$refs.coverPage.examiners,
-                    fileName:this.$refs.coverPage.fileName
+                    fileName:this.$refs.coverPage.fileName,
+                    modifyDate:this.formatDate()
                 }
                 modifyPaperMeta(this.paperid, obj).then(()=>{
                     this.$notify({
@@ -237,11 +251,9 @@ export default {
 
     mounted(){
         var account = this.$store.state.account
-
         this.paperid = this.$route.params.paperid;
         this.getData();
         setInterval(()=>{
-            console.log('interval')
             this.getData()
         },10000);
     },

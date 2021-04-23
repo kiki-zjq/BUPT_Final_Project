@@ -31,7 +31,8 @@ export default {
                     duration:5000,
                 });
                 this.$store.commit('changeAccount',this.account,this.pwd,res.data[0].name);
-                this.$router.push('/Homepage');
+                let url = '/Homepage/'+window.btoa(this.account)
+                this.$router.push(url);
             }).catch((res)=>{
                 this.$notify.error({
                     title: 'Error',

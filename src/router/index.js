@@ -17,17 +17,17 @@ export default new Router({
       component: LogIn
     },
     {
-      path: '/Homepage',
+      path: '/Homepage/:account',
       name: 'Homepage',
       component: Homepage
     },
     {
-      path:'/Blank',
+      path:'/Blank/:account',
       name:'Blank',
       component:Blank
     },
     {
-      path:'/Document/:paperid',
+      path:'/Document/:account/:paperid',
       name:'Document',
       component:Document
     },

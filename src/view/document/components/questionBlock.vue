@@ -95,7 +95,7 @@
 
 
         <!-- <EditBlock :dialogFormVisible="dialogFormVisible" :title="this.title" :total="this.total" :subquestion="this.subquestion"/> -->
-        <el-dialog title="Edit Question" :visible.sync="dialogFormVisible">
+        <el-dialog title="Edit Question" :visible.sync="dialogFormVisible" :before-close="cancelEdit">
             <el-form label-width="100px">
                 <el-form-item label="Question" >
                     <el-input type="textarea" :placeholder=editTitle :autosize="{ minRows: 2, maxRows: 6}" v-model="editTitle" resize="none" clearable></el-input>
@@ -311,14 +311,20 @@ export default {
         },
 
         handleClose(){
-
-            // console.log(JSON.stringify(this.origComment) != JSON.stringify(this.question.comment))
-            if(JSON.stringify(this.origComment) != JSON.stringify(this.question.comment)){
-                modifyComment(this.question.comment,this.question.qid)
-                this.origComment = JSON.parse(JSON.stringify(this.question.comment))
-            }
-                
-            this.drawer=false;
+                if(JSON.stringify(this.origComment) != JSON.stringify(this.question.comment)){
+                    modifyComment(this.question.comment,this.question.qid)
+                    this.origComment = JSON.parse(JSON.stringify(this.question.comment))
+                }
+                this.drawer=false;
+        },
+        cancelEdit(){
+            this.$confirm('We will not save your input if you leave!', 'Prompt',{
+                confirmButtonText: 'Leave',
+                cancelButtonText: 'Stay Here',
+                type: 'warning'
+            }).then(()=>{
+                this.dialogFormVisible = false;
+            })
         },
         saveComment(){
 

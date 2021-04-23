@@ -4,9 +4,13 @@ const mongoose = require('mongoose');
 
 require('../models/question');
 const Question = mongoose.model('Question');
+require('../models/account');
+const Account = mongoose.model('Account');
+require('../models/paper');
+const Paper = mongoose.model('Paper');
+
 
 const questionRouter = express.Router();
-
 questionRouter.use(bodyParser.json());
 
 

@@ -145,11 +145,18 @@ export default {
             this.subquestion[i].criteria.push(Obj);
         },
         cancel(){
-            this.title='';
-            this.total='';
-            this.subquestion=[];
-            
-            this.$emit('cancel');
+            this.$confirm('We will not save your input if you leave!', 'Prompt',{
+                confirmButtonText: 'Leave',
+                cancelButtonText: 'Stay Here',
+                type: 'warning'
+            }).then(()=>{
+                this.title='';
+                this.total='';
+                this.subquestion=[];
+                
+                this.$emit('cancel');
+            })
+
         },
         save(){
             if(this.check()){
@@ -183,11 +190,6 @@ export default {
             else return false;
         },
 
-        handleClose(){
-            
-            this.addBlock = false;
-            alert(this.addBlock)
-        }
     }
 }
 </script>
