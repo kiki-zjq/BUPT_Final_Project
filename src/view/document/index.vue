@@ -1,6 +1,6 @@
 <template>
     <div class='blank'>
-        <HeaderPart class="header-part"/>
+        <!-- <HeaderPart class="header-part"/> -->
         <el-row>
             <el-col :span="16" :offset="4">
                 <div class="main-part">
@@ -93,6 +93,7 @@ export default {
             isEditMeta:false,
             
             paperid:'',
+            timeInterval:'',
         };
     },
     methods:{
@@ -253,10 +254,14 @@ export default {
         var account = this.$store.state.account
         this.paperid = this.$route.params.paperid;
         this.getData();
-        setInterval(()=>{
+        this.timeInterval = setInterval(()=>{
             this.getData()
         },10000);
     },
+
+    beforeDestroy(){
+        clearInterval(this.timeInterval);
+    }
 
 }
 </script>

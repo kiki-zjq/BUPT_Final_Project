@@ -36,36 +36,55 @@
                              @editMeta="isEditMeta=true" 
                              @saveMeta="saveMeta" 
                              @cancelMeta="cancelMeta"
-                             @addTeam="teamBlock=true"/>
+                             @addTeam="teamBlock=true"
+                             @download="downloadBlock=true"
+                             @openBank="bankBlock=true"
+                             :isEditMeta="isEditMeta"/>
                 </div>
             </el-col>
                     
 
         </el-row>
 
-
+        <DownloadBlock :downloadBlock="downloadBlock" @cancel="downloadBlock=false" @download="download"/>
         <TeamBlock :teamBlock="teamBlock" @cancel="teamBlock=false"/>
         <AddQuestionBlock :addBlock="addBlock" @cancel="addBlock=false" @save="save" />
-        <!-- addquestionblock 全部处理完毕：可以加问题了 -->
+        
+
         <InitMeta :initMeta="openInitMeta" :paperid="paperid" @finishInitMeta="finishInit"/>
 
+        <el-drawer
+            title="Question Bank"
+            @open="openQuestionBank"
+            :visible.sync="bankBlock"
+            direction="ltr"
+            size="50%">
+            <BankBlock @addFromBank='addFromBank' ref="questionBank"/>
+        </el-drawer> 
 
     </div>    
 </template>
 
 
 <script>
-import HeaderPart from './components/head'
-import ToolBox from './components/toolbox'
 import InitMeta from './components/initMeta'
-import AddQuestionBlock from './components/addQuestionBlock'
-import Cover from './components/coverPage'
-import QuestionBlock from './components/questionBlock'
-import TeamBlock from './components/teamBlock'
+
+import HeaderPart from '../document/components/head'
+import ToolBox from '../document/components/toolbox'
+
+
+import TeamBlock from '../document/components/teamBlock'
+import AddQuestionBlock from '../document/components/addQuestionBlock'
+import Cover from '../document/components/coverPage'
+import QuestionBlock from '../document/components/questionBlock'
+
+import DownloadBlock from '../document/components/downloadBlock'
+import BankBlock from '../document/components/bankBlock'
 
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
 import {modifyPaperMeta} from '@/request/paperApi'
+import {downloadPaper} from '@/request/downloadApi'
 import {dateMixin} from '@/mixins/DateMixin.js';
 
 export default {
@@ -78,7 +97,9 @@ export default {
         TeamBlock,
         AddQuestionBlock,
         Cover,
-        QuestionBlock
+        QuestionBlock,
+        DownloadBlock,
+        BankBlock,
     },
     data(){
         return{
@@ -86,6 +107,9 @@ export default {
 
             addBlock:false,
             teamBlock:false,
+            downloadBlock:false,
+            bankBlock:false,
+
             isEditMeta:false,
             
             initMeta:1,
@@ -141,13 +165,30 @@ export default {
                 addQuestion(data).then(()=>{
                     this.getData();
                 })
-            
-            
-
 
         },
 
+        openQuestionBank(){
+            this.$refs.questionBank.getBank();
+        },
 
+        addFromBank(data){
+            let obj = JSON.parse(JSON.stringify(data))
+            obj.qid = Date.parse( new Date());
+            obj.paperid = this.paperid;
+            obj.comment = [];
+            delete obj._id;
+
+            this.$notify({
+                        title: 'Success',
+                        message: 'Add a new question successfully!',
+                        type: 'success',
+                        duration:5000,
+            });
+            addQuestion(obj).then(()=>{
+                    this.getData();
+                })
+        },
 
 
         
@@ -163,7 +204,8 @@ export default {
                     courseName:this.$refs.coverPage.courseName,
                     courseDate:this.$refs.coverPage.courseDate,
                     examiners:this.$refs.coverPage.examiners,
-                    fileName:this.$refs.coverPage.fileName
+                    fileName:this.$refs.coverPage.fileName,
+                    modifyDate:this.formatDate()
                 }
                 modifyPaperMeta(this.paperid, obj).then(()=>{
                     this.$notify({
@@ -188,6 +230,45 @@ export default {
             if(val==1){
                 this.$refs.coverPage.getPaperMetaInfo(this.paperid);
             }
+        },
+
+
+        download(format, type){
+
+            let obj={
+                courseNo:this.$refs.coverPage.courseNO,
+                courseName:this.$refs.coverPage.courseName,
+                courseDate:this.$refs.coverPage.courseDate,
+                examiners:this.$refs.coverPage.examiners,
+                fileName:this.$refs.coverPage.fileName,
+                questions:this.questions
+            }
+            // console.log(obj);
+
+            downloadPaper(obj, format, type).then(()=>{
+                var a = document.createElement("a")
+                document.body.appendChild(a);
+
+                if(format == '1' || format == '3'){
+                    a.setAttribute('href','./static/'+obj.fileName+'.pdf');
+                    a.setAttribute('download',obj.fileName+'.pdf');
+                    a.click();
+                }
+                
+                if(format == '2' || format == '3'){
+                    a.setAttribute('href','./static/'+obj.fileName+'.tex');
+                    a.setAttribute('download',obj.fileName+'.tex');
+                    a.click();
+                }
+
+                // 这里未来加一个动画或者提示，让用户知道我们正在download
+
+                
+                document.body.removeChild(a);
+  
+                this.downloadBlock = false;
+            })
+            
         }
 
     },
@@ -243,5 +324,18 @@ export default {
     padding:30px;
     width:90%;
     min-height:800px;
+}
+
+</style>
+
+<style>
+.el-drawer__body {
+    /* overflow: auto; */
+    overflow: auto!important;
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar{
+    display: none;
 }
 </style>

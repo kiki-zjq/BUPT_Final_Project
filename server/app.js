@@ -5,9 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 
-
-
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var questionRouter = require('./routes/questionRoute');
@@ -17,8 +14,6 @@ var downloadRouter = require('./routes/downloadRoute');
 
 
 var app = express();
-
-
 
 
 const url = 'mongodb://localhost:27017/Final';

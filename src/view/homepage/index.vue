@@ -1,14 +1,18 @@
 <template>
     <div class="homepage">
         <!-- <HeaderPart id="header-part" v-bind:language='language' v-on:changeLang='changeLang()'/> -->
-        <el-carousel trigger="click" height="100vh" >
+        <el-carousel trigger="click" height="100vh" :autoplay="false" >
             <el-carousel-item>
                 <IntroPart/>
             </el-carousel-item>
 
             <el-carousel-item>
-                <TempPart id="temp"/>
+                <Instruction/>
             </el-carousel-item>
+
+            <!-- <el-carousel-item>
+                <TempPart id="temp"/>
+            </el-carousel-item> -->
             
             <el-carousel-item>
                 <Recent id="recent" :recentPaper="recent" @getPaper="getPaper"/>
@@ -26,6 +30,7 @@ import FooterPart from './components/footer'
 import TempPart from './components/temp'
 import Recent from './components/recent'
 import IntroPart from './components/intro'
+import Instruction from './components/instruction'
 
 import {getAccountPaper} from '@/request/accountApi'
 export default {
@@ -34,7 +39,8 @@ export default {
         HeaderPart,
         TempPart,
         Recent,
-        IntroPart
+        IntroPart,
+        Instruction
     },
     data(){
         return{

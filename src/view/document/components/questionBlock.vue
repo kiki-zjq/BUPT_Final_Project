@@ -34,7 +34,7 @@
 
 
 
-        <el-drawer :visible.sync="drawer" direction="rtl" :before-close="handleClose">
+        <el-drawer :visible.sync="drawer" direction="rtl" :before-close="handleClose" @open="handleOpen">
 
 
             
