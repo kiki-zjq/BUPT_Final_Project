@@ -1,8 +1,12 @@
 <template>
     <div class='blank'>
-        <HeaderPart class="header-part"/>
         <el-row>
-
+            
+            <el-col :span="4">
+                <div class="back-arrow" @click="goBack()">
+                    <i class="el-icon-back"></i>
+                </div>
+            </el-col>
             
 
             <el-col :span="16" :offset="4">
@@ -231,7 +235,9 @@ export default {
                 this.$refs.coverPage.getPaperMetaInfo(this.paperid);
             }
         },
-
+        goBack(){
+            this.$router.go(-1)
+        },
 
         download(format, type){
 
@@ -337,5 +343,27 @@ export default {
 /*2.隐藏滚动条，太丑了*/
 .el-drawer__container ::-webkit-scrollbar{
     display: none;
+}
+
+.back-arrow{
+    color:white;
+    font-weight:bold;
+    /* border:2px white solid; */
+    font-size:36px;
+
+    position: fixed;
+    margin-left:100px;
+    margin-top:80px;
+    width:100px;
+    height:50px;
+    border-radius:10px;
+    background: black;
+    /* box-shadow:10px 5px 5px black; */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+    cursor: pointer;
+}
+.el-icon-back{
+    
+    line-height: 50px;
 }
 </style>

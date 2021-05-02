@@ -25,9 +25,9 @@
         </div>
 
         <div class="tool-box">
-            <el-button type="primary" size="small" icon="el-icon-edit" @click="edit()" circle></el-button>
-            <el-button type="warning" size="small" icon="el-icon-chat-square" @click="drawer = true;" circle></el-button>
-            <el-button type="danger" size="small" icon="el-icon-delete" @click="del()" circle></el-button>
+            <el-button type="primary" class="primary-btn" size="small" icon="el-icon-edit" @click="edit()" circle></el-button>
+            <el-button type="warning" class="warning-btn" size="small" icon="el-icon-chat-square" @click="drawer = true;" circle></el-button>
+            <el-button type="danger" class="danger-btn" size="small" icon="el-icon-delete" @click="del()" circle></el-button>
         </div>
 
 
@@ -316,6 +316,10 @@ export default {
                     this.origComment = JSON.parse(JSON.stringify(this.question.comment))
                 }
                 this.drawer=false;
+                this.$emit('closeComment');
+        },
+        handleOpen(){
+            this.$emit('openComment');
         },
         cancelEdit(){
             this.$confirm('We will not save your input if you leave!', 'Prompt',{
@@ -416,11 +420,13 @@ $(document).ready(function(){
 }
 
 .criteria-block{
-    border-radius: 5px;
+    border-radius: 15px;
     padding:10px;
-    margin:5px auto;
+    margin:5px auto 30px;
     width:90%;
-    background-color:rgba(251, 140, 99, 0.68);
+    background-color:gray;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    color:white;
     font-size:14px;
     font-weight:bold;
 }
@@ -437,5 +443,14 @@ $(document).ready(function(){
 /*2.隐藏滚动条，太丑了*/
 .el-drawer__container ::-webkit-scrollbar{
     display: none;
+}
+
+.primary-btn{
+    background-color:pink;
+    border:pink;
+}
+.primary-btn:hover{
+    background-color:pink;
+    opacity: 0.8;
 }
 </style>

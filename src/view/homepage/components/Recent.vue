@@ -134,7 +134,6 @@ export default {
         return {
             info:{},
             showTable:false,
-            count:0,
             item1:1,
             item2:1,
             item3:1,
@@ -157,19 +156,19 @@ export default {
         showInfo(info){
             this.info = info;
             this.showTable = true;
-            let altTable = document.getElementById("altTable");
-            altTable.style.animationIterationCount = this.count+2;
+            // let altTable = document.getElementById("altTable");
+            // altTable.style.animationDuration = '6s';
         },
         handleEnter(){
             this.showTable = false;
             let altTable = document.getElementById("altTable");
-            altTable.style.animationIterationCount = 'infinite';
-            this.count += 2;
+            // altTable.style.animationDuration = '3s';
+
         },
         handleContact(val){
             switch(val){
                 case 1:
-                    this.item1 = 5 - this.item1;
+                    this.item1 = 5 - this.item1; // A number will not render any icon/text
                     setTimeout(()=>{
                         this.item1 = this.item1 == 4 ? 2:1;
                     },500);
@@ -311,7 +310,8 @@ export default {
     height:230px;
     box-sizing:border-box;
     position:relative;
-    animation:tableMove 3s linear;
+    animation: tableMove linear;
+    animation-duration: 3s;
     animation-iteration-count: infinite;
     text-align:center;
 }
@@ -374,9 +374,10 @@ export default {
 
 @keyframes tableMove{
     0%{top:0;}
-    25%{top:10px;transform: rotate(7.5deg)}
+    25%{top:10px;transform: rotate(6deg)}
     50%{top:0;transform: rotate(0)}
-    75%{top:-10px;transform: rotate(-7.5deg)}
+    75%{top:-10px;transform: rotate(-6deg)}
     100%{top:0}
 }
+
 </style>

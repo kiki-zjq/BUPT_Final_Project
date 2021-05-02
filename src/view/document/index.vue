@@ -2,6 +2,11 @@
     <div class='blank'>
         <!-- <HeaderPart class="header-part"/> -->
         <el-row>
+            <el-col :span="4">
+                <div class="back-arrow" @click="goBack()">
+                    <i class="el-icon-back"></i>
+                </div>
+            </el-col>
             <el-col :span="16" :offset="4">
                 <div class="main-part">
                     <div class="doc">
@@ -13,6 +18,8 @@
                             :ind="index+1"
                             @modify="modify"
                             @del="del"
+                            @openComment="openComment"
+                            @closeComment="closeComment"
                         />
                         <el-divider></el-divider>
                         <p style="text-align:center;font-family:Times New Roman">END OF PAPER</p>
@@ -208,7 +215,17 @@ export default {
             this.$refs.coverPage.getPaperMetaInfo(this.paperid);
             this.isEditMeta = false;
         },
-
+        openComment(){
+            clearInterval(this.timeInterval)
+        },
+        closeComment(){
+            this.timeInterval = setInterval(()=>{
+                this.getData()
+            },10000);
+        },
+        goBack(){
+            this.$router.go(-1)
+        },
         download(format, type){
 
             let obj={
@@ -303,5 +320,27 @@ export default {
     padding:30px;
     width:90%;
     min-height:800px;
+}
+
+.back-arrow{
+    color:white;
+    font-weight:bold;
+    /* border:2px white solid; */
+    font-size:36px;
+
+    position: fixed;
+    margin-left:100px;
+    margin-top:80px;
+    width:100px;
+    height:50px;
+    border-radius:10px;
+    background: black;
+    /* box-shadow:10px 5px 5px black; */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+    cursor: pointer;
+}
+.el-icon-back{
+    
+    line-height: 50px;
 }
 </style>
