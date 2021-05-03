@@ -1,45 +1,32 @@
-# Web Template
+# Final Project QGT6
 
-It is a project based on Vue.js
+This is Jiangqi Zhu's final project. His student number is 2017212685 and his QM student number is 171045895.
 
-After `npm run dev` it will default load at localhost:8081
+It is a project based on Vue.js, Node.js and MongoDB.
 
-If you haven't configured NPM yet, you can still view the final result directly by `./docs/index.html`
+So if you want to run this project you should make sure you have correct environment settings.
 
-## Build Setup
+The MongoDB database runs on locolhost:27017. You can modify it in `./server/app.js`.
 
+
+## Run this project
+
+First, we have to run the front-end code. The front-end page runs on `localhost:8081`
 ``` bash
 # install dependencies
 npm install
 
 # serve with hot reload at localhost:8081
 npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+And then, we will run the back-end server code. The back-end server runs on `localhost:3000`
+``` bash
+cd server
 
-## How to modify the code 
+# install dependencies
+npm install
 
-1. If you want to add a totally new page 
-    => Go to `src/layout/header.vue` add a new entrance.
-    => Go to `src/view` add a new folder and add a file named index.vue in this folder.
-    => Go to `src/router/index.js` add new router information. 
-
-2. If you want to change something on the page (For exampe,I want to modify 'homepage')
-    => Go to `src/view/homepage/index.vue` 
-
-## Important
-
-When you use `npm run build`,please delete unnecessary <link> and <script> tag in `index.html`
+# server runs on localhost:3000
+npm start
+```

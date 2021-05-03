@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 21.1) (preloaded format=pdflatex 2021.3.24)  20 APR 2021 17:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 21.1) (preloaded format=pdflatex 2021.3.24)  2 MAY 2021 22:56
 entering extended mode
 **../static/TestFile.tex
 (../static/TestFile.tex
@@ -116,7 +116,7 @@ File: l3backend-pdftex.def 2021-01-09 L3 backend support: PDF output (pdfTeX)
 \l__kernel_color_stack_int=\count189
 \l__pdf_internal_box=\box47
 )
-No file TestFile.aux.
+(e:\Final_Project\BUPT_Final_Project\static\TestFile.aux)
 \openout1 = `TestFile.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
@@ -134,6 +134,7 @@ LaTeX Font Info:    ... okay on input line 20.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
 Package ragged2e Info: ABD: executing \RaggedRight on input line 20.
+
 ABD: EverySelectfont initializing macros
 LaTeX Info: Redefining \selectfont on input line 20.
 Package lastpage Info: Please have a look at the pageslts package at
@@ -271,47 +272,30 @@ Overfull \hbox (3.10312pt too wide) in paragraph at lines 55--55
 
 
 
-Package lastpage Warning: Rerun to get the references right on input line 200.
+! LaTeX Error: Something's wrong--perhaps a missing \item.
 
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.166         \end{enumerate}
+                             
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.166         \end{enumerate}
+                             
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-AED: lastpage setting LastPage
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.0pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.0pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-2.0pt}.
-
-
-LaTeX Warning: Reference `unknown' on page 1 undefined on input line 200.
-
-[1
-
-] (e:\Final_Project\BUPT_Final_Project\static\TestFile.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+ 
 Here is how much of TeX's memory you used:
- 1926 strings out of 479618
- 28672 string characters out of 2882003
+ 1922 strings out of 479618
+ 28767 string characters out of 2882003
  316426 words of memory out of 3000000
- 19116 multiletter control sequences out of 15000+200000
- 408610 words of font info for 44 fonts, out of 3000000 for 9000
+ 19112 multiletter control sequences out of 15000+200000
+ 408312 words of font info for 43 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,12n,74p,300b,312s stack positions out of 5000i,500n,10000p,200000b,50000s
-<E:/LATEX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><E:/LATEX/fonts/type1/pub
-lic/amsfonts/cm/cmbx12.pfb><E:/LATEX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><
-E:/LATEX/fonts/type1/public/amsfonts/cm/cmr10.pfb><E:/LATEX/fonts/type1/public/
-amsfonts/cm/cmr12.pfb>
-Output written on e:\Final_Project\BUPT_Final_Project\static\TestFile.pdf (3 pa
-ges, 85976 bytes).
-PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ 68i,6n,74p,300b,167s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!

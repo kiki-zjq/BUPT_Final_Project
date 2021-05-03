@@ -114,7 +114,17 @@ export default {
         
         del(qid){
             deleteQuestion(qid)
+
             this.getData()
+            var obj = {
+                    courseNO:this.$refs.coverPage.courseNO,
+                    courseName:this.$refs.coverPage.courseName,
+                    courseDate:this.$refs.coverPage.courseDate,
+                    examiners:this.$refs.coverPage.examiners,
+                    fileName:this.$refs.coverPage.fileName,
+                    modifyDate:this.formatDate()
+                }
+            modifyPaperMeta(this.paperid, obj)
         },
         
         modify(data,qid){
@@ -128,7 +138,15 @@ export default {
                     });
 
             });
-            
+            var obj = {
+                    courseNO:this.$refs.coverPage.courseNO,
+                    courseName:this.$refs.coverPage.courseName,
+                    courseDate:this.$refs.coverPage.courseDate,
+                    examiners:this.$refs.coverPage.examiners,
+                    fileName:this.$refs.coverPage.fileName,
+                    modifyDate:this.formatDate()
+                }
+            modifyPaperMeta(this.paperid, obj)
         },
 
 
@@ -154,7 +172,15 @@ export default {
                     this.getData();
                 })
             
-            
+                var obj = {
+                    courseNO:this.$refs.coverPage.courseNO,
+                    courseName:this.$refs.coverPage.courseName,
+                    courseDate:this.$refs.coverPage.courseDate,
+                    examiners:this.$refs.coverPage.examiners,
+                    fileName:this.$refs.coverPage.fileName,
+                    modifyDate:this.formatDate()
+                }
+                modifyPaperMeta(this.paperid, obj)
 
 
         },
@@ -178,7 +204,17 @@ export default {
             });
             addQuestion(obj).then(()=>{
                     this.getData();
-                })
+                });
+            
+            var metaObj = {
+                    courseNO:this.$refs.coverPage.courseNO,
+                    courseName:this.$refs.coverPage.courseName,
+                    courseDate:this.$refs.coverPage.courseDate,
+                    examiners:this.$refs.coverPage.examiners,
+                    fileName:this.$refs.coverPage.fileName,
+                    modifyDate:this.formatDate()
+                }
+            modifyPaperMeta(this.paperid, metaObj)
         },
 
 

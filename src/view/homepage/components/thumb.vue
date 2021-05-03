@@ -9,7 +9,7 @@
         <div class="thumb-tool">
             <el-tooltip class="item" effect="dark" :content="fileName" placement="top-start">
                 <span v-if="!isRename">{{displayFileName}}</span>
-                <!-- <el-input v-if="isRename" ></el-input> -->
+                <el-input class="change-name" v-if="isRename" :placeholder="displayFileName" v-model="modifyName"></el-input>
             </el-tooltip>
     
 
@@ -22,7 +22,9 @@
             width="120"
             trigger="click"
             v-model="visible">
-                <div class="thumb-tool-btn" @click="rename()"><i class="el-icon-edit-outline"></i> Rename</div>
+                <div class="thumb-tool-btn" v-if="!isRename" @click="rename(1)"><i class="el-icon-edit-outline"></i> Rename</div>
+                <div class="thumb-tool-btn" v-if="isRename" @click="rename(2)"><i class="el-icon-check"></i> Finish</div>
+                <div class="thumb-tool-btn" v-if="isRename" @click="rename(3)"><i class="el-icon-back"></i> Back</div>
                 <div class="thumb-tool-btn" @click="removePaper()"><i class="el-icon-delete"></i> Delete</div>
                 <div class="thumb-tool-btn" @click="visible = !visible"><i class="el-icon-data-board"></i><a :href="docURL" target="_blank"> Open in new tab</a></div>
 
@@ -37,9 +39,11 @@
 
 
 <script>
-import {getPaperMeta} from '@/request/paperApi'
+import {getPaperMeta,modifyPaperMeta} from '@/request/paperApi'
+import {dateMixin} from '@/mixins/DateMixin.js';
 
 export default {
+    mixins:[dateMixin],
     props:{
         paperid:''
     },
@@ -51,6 +55,8 @@ export default {
             modifyDate:'',
             docURL:'http://localhost:8081/#/Document/',
             isRename:false,
+
+            modifyName:'',
         }
     },
     methods:{
@@ -73,8 +79,39 @@ export default {
             let url = '/Document/'+this.$route.params.account +'/'+this.info.paperid
             this.$router.push(url);
         },
-        rename(){
+        rename(val){
+            if(val==1){
+                this.isRename = true;
+            } else if(val==3){
+                this.isRename = false;
+                this.modifyName = '';
+            } else{
+                if(this.modifyName==''){
+                    this.$notify.error({
+                        title:'Error',
+                        message:'Please input a valid file name',
+                    })
+                    this.isRename = false;
+                    this.modifyName = '';
+                    return;
+                }
 
+                let obj = this.info;
+                obj.fileName = this.modifyName;
+                obj.modifyDate = this.formatDate();
+                
+
+                modifyPaperMeta(this.info.paperid, obj);
+                this.getRecentPaperInfo();
+                this.$notify({
+                        type:'success',
+                        title:'Success',
+                        message:'Modify your file name successfully!'
+                })
+                this.isRename = false;
+                this.modifyName = '';
+            }
+            
         },
     },
     mounted(){
@@ -159,5 +196,10 @@ export default {
 }
 .thumb-tool-btn a:visited{
 	color: #606266;
+}
+.change-name{
+    width:80%;
+    float:left;
+    height:20px;
 }
 </style>

@@ -5,7 +5,7 @@
             <div class="thumb-list">
                 <p style="color:white;font-size:16px;margin-bottom:30px">You can create a blank document here. What's more, all the files you have created will be displayed in this page!</p>
             
-                <div class="temp" style="margin-top:20px" @mouseenter="handleEnter" @click="create(0)">
+                <div class="temp" style="" @mouseenter="handleEnter" @click="create(0)">
                     <div class="abbr">
                         <i class="el-icon-plus"></i>
                     </div>
@@ -138,6 +138,7 @@ export default {
             item2:1,
             item3:1,
             item4:1,
+            timeout:0,
         }
     },
     props:{
@@ -168,28 +169,32 @@ export default {
         handleContact(val){
             switch(val){
                 case 1:
+                    // clearTimeout(this.timeout);
                     this.item1 = 5 - this.item1; // A number will not render any icon/text
-                    setTimeout(()=>{
+                    this.timeout = setTimeout(()=>{
                         this.item1 = this.item1 == 4 ? 2:1;
-                    },500);
+                    },400);
                     break;
                 case 2:
+                    // clearTimeout(this.timeout);
                     this.item2 = 5 - this.item2;
-                    setTimeout(()=>{
+                    this.timeout = setTimeout(()=>{
                         this.item2 = this.item2 == 4 ? 2:1;
-                    },500);
+                    },400);
                     break;
                 case 3:
+                    // clearTimeout(this.timeout);
                     this.item3 = 5 - this.item3;
-                    setTimeout(()=>{
+                    this.timeout = setTimeout(()=>{
                         this.item3 = this.item3 == 4 ? 2:1;
-                    },500);
+                    },400);
                     break;
                 case 4:
+                    // clearTimeout(this.timeout);
                     this.item4 = 5 - this.item4;
-                    setTimeout(()=>{
+                    this.timeout = setTimeout(()=>{
                         this.item4 = this.item4 == 4 ? 2:1;
-                    },500);
+                    },400);
                     break;
             }
             
@@ -340,14 +345,15 @@ export default {
     }
     .abbr{
         width:100%;
-        height:240px;
+        height:300px;
         background: white;
         text-align: center;
         transition: all .4s;
     }
     .abbr:hover{
         cursor:pointer;
-        margin-top:10px;
+        /* margin-top:10px; */
+         animation: plusColor 3s linear infinite;
     }
     .description{
         margin-top:1em;
@@ -380,4 +386,14 @@ export default {
     100%{top:0}
 }
 
+@keyframes plusColor{
+    0%{color:black;}
+    15%{color:#7F7FD5;}
+    35%{color:#86A8E7;}
+    45%{color:#91EAE4;}
+    55%{color:#91EAE4;}
+    65%{color:#86A8E7;}
+    85%{color:#7F7FD5}
+    100%{color:black;}
+}
 </style>
