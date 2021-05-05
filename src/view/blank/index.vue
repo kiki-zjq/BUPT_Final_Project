@@ -6,6 +6,15 @@
                 <div class="back-arrow" @click="goBack()">
                     <i class="el-icon-back"></i>
                 </div>
+                <el-tooltip
+                    placement="top"
+                    effect="dark"
+                    content="Get some instruction"
+                    >
+                    <div class="help" @click="openInst()">
+                        <i class="el-icon-info"></i>
+                    </div>
+                </el-tooltip>
             </el-col>
             
 
@@ -53,7 +62,7 @@
         <DownloadBlock :downloadBlock="downloadBlock" @cancel="downloadBlock=false" @download="download"/>
         <TeamBlock :teamBlock="teamBlock" @cancel="teamBlock=false"/>
         <AddQuestionBlock :addBlock="addBlock" @cancel="addBlock=false" @save="save" />
-        
+        <instBlock :instBlock="inst" @cancel="inst=false"/>
 
         <InitMeta :initMeta="openInitMeta" :paperid="paperid" @finishInitMeta="finishInit"/>
 
@@ -84,7 +93,7 @@ import QuestionBlock from '../document/components/questionBlock'
 
 import DownloadBlock from '../document/components/downloadBlock'
 import BankBlock from '../document/components/bankBlock'
-
+import instBlock from '../document/components/instBlock'
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
 import {modifyPaperMeta} from '@/request/paperApi'
@@ -104,6 +113,7 @@ export default {
         QuestionBlock,
         DownloadBlock,
         BankBlock,
+        instBlock
     },
     data(){
         return{
@@ -115,7 +125,7 @@ export default {
             bankBlock:false,
 
             isEditMeta:false,
-            
+            inst:false,
             initMeta:1,
             paperid:'',
         };
@@ -228,7 +238,9 @@ export default {
             this.$refs.coverPage.getPaperMetaInfo(this.paperid);
             this.isEditMeta = false;
         },
-
+        openInst(){
+            this.inst = true;
+        },
         finishInit(val){
             this.initMeta+=1;
             if(val==1){
@@ -252,6 +264,11 @@ export default {
             // console.log(obj);
 
             downloadPaper(obj, format, type).then(()=>{
+                 this.$notify({
+                    title:'Success',
+                    message:'We are downloading now! Wait a few seconds please :-)',
+                    type:'success',
+                })
                 var a = document.createElement("a")
                 document.body.appendChild(a);
 
@@ -273,6 +290,12 @@ export default {
                 document.body.removeChild(a);
   
                 this.downloadBlock = false;
+            })
+            .catch((err)=>{
+                this.$notify.error({
+                    title: 'Error',
+                    message: 'Download failed! It seems there are invalid character in your paper'
+                });
             })
             
         }
@@ -365,5 +388,27 @@ export default {
 .el-icon-back{
     
     line-height: 50px;
+}
+
+.help{
+    color:white;
+    font-weight:bold;
+
+    font-size:36px;
+
+    position: fixed;
+    margin-left:125px;
+    margin-top:600px;
+    width:50px;
+    height:50px;
+    border-radius:50px;
+    background: darksalmon;
+    box-shadow:10px 5px 5px black;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+    cursor: pointer;
+}
+.el-icon-info{
+    line-height: 50px;
+    color:white;
 }
 </style>

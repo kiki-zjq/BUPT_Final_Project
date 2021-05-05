@@ -6,6 +6,15 @@
                 <div class="back-arrow" @click="goBack()">
                     <i class="el-icon-back"></i>
                 </div>
+                <el-tooltip
+                    placement="top"
+                    effect="dark"
+                    content="Get some instruction"
+                    >
+                    <div class="help" @click="openInst()">
+                        <i class="el-icon-info"></i>
+                    </div>
+                </el-tooltip>
             </el-col>
             <el-col :span="16" :offset="4">
                 <div class="main-part">
@@ -44,6 +53,7 @@
         <DownloadBlock :downloadBlock="downloadBlock" @cancel="downloadBlock=false" @download="download"/>
         <TeamBlock :teamBlock="teamBlock" @cancel="teamBlock=false"/>
         <AddQuestionBlock :addBlock="addBlock" @cancel="addBlock=false" @save="save" />
+        <instBlock :instBlock="inst" @cancel="inst=false"/>
 
         <el-drawer
             title="Question Bank"
@@ -68,6 +78,7 @@ import Cover from './components/coverPage'
 import QuestionBlock from './components/questionBlock'
 import DownloadBlock from './components/downloadBlock'
 import BankBlock from './components/bankBlock'
+import instBlock from './components/instBlock'
 
 import {addQuestion,fetchQuestion,deleteQuestion,modifyQuestion} from '@/request/questionApi'
 import {modifyPaperMeta} from '@/request/paperApi'
@@ -87,7 +98,8 @@ export default {
         AddQuestionBlock,
         Cover,
         QuestionBlock,
-        BankBlock
+        BankBlock,
+        instBlock
     },
     data(){
         return{
@@ -98,7 +110,8 @@ export default {
             downloadBlock:false,
             bankBlock:false,
             isEditMeta:false,
-            
+            inst:false,
+
             paperid:'',
             timeInterval:'',
         };
@@ -262,6 +275,9 @@ export default {
         goBack(){
             this.$router.go(-1)
         },
+        openInst(){
+            this.inst = true;
+        },
         download(format, type){
 
             let obj={
@@ -274,7 +290,13 @@ export default {
             }
             // console.log(obj);
 
-            downloadPaper(obj, format, type).then(()=>{
+            downloadPaper(obj, format, type)
+            .then(()=>{
+                this.$notify({
+                    title:'Success',
+                    message:'We are downloading now! Wait a few seconds please :-)',
+                    type:'success',
+                })
                 var a = document.createElement("a")
                 document.body.appendChild(a);
 
@@ -296,6 +318,12 @@ export default {
                 document.body.removeChild(a);
   
                 this.downloadBlock = false;
+            })
+            .catch((err)=>{
+                this.$notify.error({
+                    title: 'Error',
+                    message: 'Download failed! It seems there are invalid character in your paper'
+                });
             })
             
         }
@@ -374,6 +402,27 @@ export default {
     /* box-shadow:10px 5px 5px black; */
     box-shadow: 0 10px 20px rgba(0,0,0,0.7);
     cursor: pointer;
+}
+.help{
+    color:white;
+    font-weight:bold;
+
+    font-size:36px;
+
+    position: fixed;
+    margin-left:125px;
+    margin-top:600px;
+    width:50px;
+    height:50px;
+    border-radius:50px;
+    background: darksalmon;
+    box-shadow:10px 5px 5px black;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+    cursor: pointer;
+}
+.el-icon-info{
+    line-height: 50px;
+    color:white;
 }
 .el-icon-back{
     
